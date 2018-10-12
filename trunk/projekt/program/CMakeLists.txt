@@ -5,6 +5,7 @@ project(Program)
 #ustaw zbior plików zrodlowych projektu
 set(SOURCE_FILES
         src/main.cpp
+        src/TekstJawny.cpp include/TekstJawny.h
         )
 #wlacz wskazane pliki do programu wykonywalnego Program
 add_executable(Program ${SOURCE_FILES})

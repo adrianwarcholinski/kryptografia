@@ -1,22 +1,45 @@
 #include <iostream>
 #include <cstdlib>
+#include <string>
 #include <fstream>
+#include "TekstJawny.h"
 
 using namespace std;
-class obiekt_do_szyfrowania{
-private:
-    char* tresc;
-    bool opcja;
-public:
-    obiekt_do_szyfrowania(){
-        cout<<"Prosze podac metode wprowadzania danych:\n1. Tekst wprowadzany z klawiatury\n2. Tekst wczytywany z pliku\nWpisz wybraną opcje:    ";
-        cin>>opcja;
-        cout<<opcja;
-        }
 
-};
+void wyswietlNaglowek() {
+    cout << "Algorytm szyfrowania AES." << endl
+         << "Autorzy:" << endl
+         << "Aleksandra Ruta" << endl
+         << "Adrian Warcholinski" << endl
+         << "Kamil Piatkowski" << endl;
+}
+
+// Zrobione w stringu, aby nie przejmowac sie dlugoscia ciagu wejsciowego - Adrian
+string wczytajTekst() {
+    short wybor;
+    string tekst;
+    cout << tekst;
+    cout << "Podaj metode wprowadzania danych:" << endl
+         << "[1] Tekst wprowadzony z klawiatury" << endl
+         << "[2] Tekst wczytywany z pliku" << endl
+         << "Wybierz opcje:";
+    while(true) {
+        cin >> wybor;
+        if((wybor == 1) || (wybor == 2)){
+            break;
+        } else {
+            cout << "Nieprawidlowa opcja. Wybierz opcje: ";
+        }
+    }
+    if(wybor == 1) {
+        cout << "Wprowadz tekst:" << endl;
+        cin >> tekst;
+        return tekst;
+    }
+}
+
 int main() {
-    cout << "Algorytm szyfrowania AES. \n Autorzy:\n- Aleksandra Ruta\n-Adrian Warcholinski\n- Kamil Piatkowski" << endl;
-    obiekt_do_szyfrowania ob;
+    wyswietlNaglowek();
+    TekstJawny tekstJawny(wczytajTekst());
     return 0;
 }

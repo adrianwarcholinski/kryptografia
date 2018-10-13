@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <string>
 #include <fstream>
-#include "TekstJawny.h"
+#include "TekstJawny.h" //
 
 using namespace std;
 

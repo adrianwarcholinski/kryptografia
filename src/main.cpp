@@ -43,7 +43,6 @@ string wczytajTekst() {
         plik.open( "../dane.txt", ios::in );
         if( plik.good() )
         {
-            cout << "Zawartosc pliku:" << endl;
             while( !plik.eof() )
             {
                 getline( plik, linia);

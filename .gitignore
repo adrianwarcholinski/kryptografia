@@ -2,3 +2,9 @@
 \.idea/
 
 \.directory
+
+cmake-build-debug/
+
+program/
+
+README\.md

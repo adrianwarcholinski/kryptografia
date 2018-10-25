@@ -9,12 +9,12 @@
 
 using namespace std;
 
-class TekstJawny{
+class tekstJawny{
 private:
     string tresc;
 
 public:
-    TekstJawny(string tresc);
+    tekstJawny(string tresc);
 };
 
 

@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <string>
 #include <fstream>
-#include "TekstJawny.h"
+#include "tekstJawny.h"
 
 using namespace std;
 
@@ -39,6 +39,6 @@ string wczytajTekst() {
 
 int main() {
     wyswietlNaglowek();
-    TekstJawny tekstJawny(wczytajTekst());
+    tekstJawny tekstJawny(wczytajTekst());
     return 0;
 }

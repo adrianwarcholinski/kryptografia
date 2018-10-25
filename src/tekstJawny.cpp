@@ -3,8 +3,8 @@
 //
 
 #include <iostream>
-#include "TekstJawny.h"
+#include "tekstJawny.h"
 
-TekstJawny::TekstJawny(string tresc) {
+tekstJawny::tekstJawny(string tresc) {
     this->tresc = tresc;
 }

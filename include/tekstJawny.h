@@ -14,9 +14,9 @@ private:
     string tresc;
     int iloscMacierzy;
     char ***macierze;
-    void podzialNaMacierze();
-    char*** utworzMacierze(int );
-    void usunMacierze(char*** , int );
+    void wypelnijMacierze();
+    void utworzMacierze();
+    void usunMacierze();
 public:
     tekstJawny(string tresc);
     ~tekstJawny();

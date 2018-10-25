@@ -10,12 +10,11 @@
 
 tekstJawny::tekstJawny(string tresc) {
     this->tresc = tresc;
-    this->iloscMacierzy = int(ceil(tresc.length() * 1.0 / 16));
-    podzialNaMacierze();
+    utworzMacierze();
+    wypelnijMacierze();
 }
 tekstJawny::~tekstJawny() {
-    usunMacierze(macierze, iloscMacierzy);
-    cout<<"Macierze usuniete"<<endl;
+    usunMacierze();
 }
 void tekstJawny::wyswietlMacierze() {
     for (int i = 0; i < iloscMacierzy; i++) {
@@ -28,8 +27,7 @@ void tekstJawny::wyswietlMacierze() {
         cout<<endl;
     }
 }
-void tekstJawny::podzialNaMacierze() {
-    this->macierze = utworzMacierze(iloscMacierzy);
+void tekstJawny::wypelnijMacierze() {
     int licznik = 0;
     for (int i = 0; i < iloscMacierzy; i++) {
         for (int j = 0; j < 4; j++) {
@@ -43,31 +41,31 @@ void tekstJawny::podzialNaMacierze() {
         }
     }
 }
-    char*** tekstJawny::utworzMacierze(int iloscMacierzy)
+    void tekstJawny::utworzMacierze()
     {
-        char*** the_array = new char**[iloscMacierzy];
+        iloscMacierzy = int(ceil(tresc.length() * 1.0 / 16));
+        macierze = new char**[iloscMacierzy];
         for(int i(0); i < iloscMacierzy; ++i)
         {
-            the_array[i] = new char*[4];
+            macierze[i] = new char*[4];
 
             for(int j(0); j < 4; ++j)
             {
-                the_array[i][j] = new char[4];
+                macierze[i][j] = new char[4];
             }
         }
-        return the_array;
     }
-    void tekstJawny::usunMacierze(char*** the_array, int iloscMacierzy){
+    void tekstJawny::usunMacierze(){
         {
             for (int i = 0; i < iloscMacierzy; ++i)
             {
                 for (int j = 0; j < 4; ++j)
                 {
-                    delete [] the_array[i][j];
+                    delete [] macierze[i][j];
                 }
-                delete [] the_array[i];
+                delete [] macierze[i];
             }
-            delete [] the_array;
+            delete [] macierze;
         }
     }
 

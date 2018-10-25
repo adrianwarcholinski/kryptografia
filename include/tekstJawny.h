@@ -12,9 +12,15 @@ using namespace std;
 class tekstJawny{
 private:
     string tresc;
-
+    int iloscMacierzy;
+    char ***macierze;
+    void podzialNaMacierze();
+    char*** utworzMacierze(int );
+    void usunMacierze(char*** , int );
 public:
     tekstJawny(string tresc);
+    ~tekstJawny();
+    void wyswietlMacierze();
 };
 
 

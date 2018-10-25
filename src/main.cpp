@@ -18,27 +18,28 @@ void wyswietlNaglowek() {
 string wczytajTekst() {
     short wybor;
     string tekst;
-    cout << "Podaj metode wprowadzania danych:" << endl
-         << "[1] Tekst wprowadzony z klawiatury" << endl
-         << "[2] Tekst wczytywany z pliku" << endl
-         << "Wybierz opcje: ";
-    while(true) {
-        cin >> wybor;
-        if((wybor == 1) || (wybor == 2)) {
-            break;
-        } else {
-            cout << "Nieprawidlowa opcja. Wybierz opcje: ";
-        }
-    }
-    if(wybor == 1) {
+//    cout << "Podaj metode wprowadzania danych:" << endl
+//         << "[1] Tekst wprowadzony z klawiatury" << endl
+//         << "[2] Tekst wczytywany z pliku" << endl
+//         << "Wybierz opcje: ";
+//    while(true) {
+//        cin >> wybor;
+//        if((wybor == 1) || (wybor == 2)) {
+//            break;
+//        } else {
+//            cout << "Nieprawidlowa opcja. Wybierz opcje: ";
+//        }
+//    }
+//    if(wybor == 1) {
         cout << "Wprowadz tekst:" << endl;
         cin >> tekst;
         return tekst;
-    }
+//    }
 }
 
 int main() {
     wyswietlNaglowek();
     tekstJawny tekstJawny(wczytajTekst());
+    tekstJawny.wyswietlMacierze();
     return 0;
 }

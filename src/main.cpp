@@ -17,24 +17,41 @@ void wyswietlNaglowek() {
 // Zrobione w stringu, aby nie przejmowac sie dlugoscia ciagu wejsciowego - Adrian
 string wczytajTekst() {
     short wybor;
-    string tekst;
-//    cout << "Podaj metode wprowadzania danych:" << endl
-//         << "[1] Tekst wprowadzony z klawiatury" << endl
-//         << "[2] Tekst wczytywany z pliku" << endl
-//         << "Wybierz opcje: ";
-//    while(true) {
-//        cin >> wybor;
-//        if((wybor == 1) || (wybor == 2)) {
-//            break;
-//        } else {
-//            cout << "Nieprawidlowa opcja. Wybierz opcje: ";
-//        }
-//    }
-//    if(wybor == 1) {
-        cout << "Wprowadz tekst:" << endl;
-        cin >> tekst;
+    string tekst="";
+    cout << "Podaj metode wprowadzania danych:" << endl
+         << "[1] Tekst wprowadzony z klawiatury" << endl
+         << "[2] Tekst wczytywany z pliku" << endl
+         << "Wybierz opcje: ";
+    while(true) {
+        cin >> wybor;
+        if((wybor == 1) || (wybor == 2)) {
+            break;
+        } else {
+            cout << "Nieprawidlowa opcja. Wybierz opcje: ";
+        }
+    }
+    if(wybor == 1) {
+        cout << "Wprowadz tekst:";
+        cin.get();
+        getline(cin, tekst);
         return tekst;
-//    }
+    }
+    else if(wybor==2){
+        cout<<"Nazwa pliku: dane.txt"<<endl;
+        fstream plik;
+        string linia;
+        plik.open( "../dane.txt", ios::in );
+        if( plik.good() )
+        {
+            cout << "Zawartosc pliku:" << endl;
+            while( !plik.eof() )
+            {
+                getline( plik, linia);
+                tekst.append(linia+'\n');
+            }
+            plik.close();
+        } else cout << "Błąd! Nie udalo otworzyc sie pliku!" << endl;
+    }
 }
 
 int main() {

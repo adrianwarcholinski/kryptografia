@@ -33,7 +33,7 @@ void tekstJawny::wypelnijMacierze() {
         for (int j = 0; j < 4; j++) {
             for (int k = 0; k < 4; k++) {
                 if (tresc.length() <= licznik)
-                    macierze[i][j][k] = '0';
+                    macierze[i][j][k] = 0;
                 else
                     macierze[i][j][k] = tresc[licznik];
                 licznik++;

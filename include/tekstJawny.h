@@ -2,29 +2,26 @@
 // Created by adria on 12.10.2018.
 //
 
-#include <string>
-
 #ifndef PROJEKT_TEKSTJAWNY_H
 #define PROJEKT_TEKSTJAWNY_H
 
+#include <string>
+#include "Macierze.h"
+
 using namespace std;
 
-class tekstJawny{
+class TekstJawny {
 private:
     string tresc;
     int iloscMacierzy;
-    char ***macierze;
     string kluczPodstawowy;
     string kluczRozszerzony;
 
-    void wypelnijMacierze();
-    void utworzMacierze();
-    void usunMacierze();
     void rozszerzKlucz();
 public:
-    tekstJawny(string kluczPodstawowy,string tresc);
-    ~tekstJawny();
-    void wyswietlMacierze();
+    Macierze* macierze;
+    TekstJawny(string kluczPodstawowy,string tresc);
+    ~TekstJawny();
 };
 
 

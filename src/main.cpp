@@ -2,7 +2,8 @@
 #include <cstdlib>
 #include <string>
 #include <fstream>
-#include "tekstJawny.h"
+#include "TekstJawny.h"
+#include "SBox.h"
 
 using namespace std;
 
@@ -35,30 +36,27 @@ string wczytajTekst() {
         cin.ignore();
         getline(cin, tekst);
     }
-    else if(wybor==2){
-        cout<<"Nazwa pliku: dane.txt"<<endl;
+    else if(wybor == 2) {
+        cout << "Nazwa pliku: dane.txt" << endl;
         fstream plik;
         string linia;
         plik.open( "../dane.txt", ios::in );
-        if( plik.good() )
-        {
-            while( !plik.eof() )
-            {
-                getline( plik, linia);
+        if( plik.good() ) {
+            while( !plik.eof() ) {
+                getline(plik, linia);
                 tekst.append(linia+'\n');
             }
             plik.close();
-        } else cout << "Błąd! Nie udalo otworzyc sie pliku!" << endl;
+        } else cout << "Blad - nie udalo sie otworzyc pliku" << endl;
     }
     return tekst;
 }
 string wczytajKlucz(){
     string klucz="";
-    cout<<"Wpisz max 16-znakowy klucz:";
+    cout << "Wpisz max 16-znakowy klucz:";
     cin.ignore();
     while(true) {
         getline(cin, klucz);
-//        cout<<"DL"<<klucz.length()<<endl;
         if(klucz.length() <= 16) {
             break;
         } else {
@@ -68,14 +66,18 @@ string wczytajKlucz(){
     for(int i = klucz.length(); i<16; i++) {
         klucz += (char)0;
     }
-//    cout<<klucz<<endl;
-//    cout << klucz.length() << endl;
     return klucz;
 }
 
 int main() {
     wyswietlNaglowek();
-    tekstJawny tekstJawny(wczytajKlucz(),wczytajTekst());
-    //tekstJawny.wyswietlMacierze();
+    SBox* sbox = new SBox();
+
+//    sbox->wyswietlSBoxy();
+
+//    TekstJawny tekstJawny(wczytajKlucz(),wczytajTekst());
+//    tekstJawny.macierze->wyswietlMacierze();
+
+    cin.get(); // na potrzeby uruchamiania z wiersza polecen
     return 0;
 }

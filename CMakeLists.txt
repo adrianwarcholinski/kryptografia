@@ -20,8 +20,8 @@ project(Program)
 #ustaw zbior plików zrodlowych projektu
 set(SOURCE_FILES
         src/main.cpp
-        src/tekstJawny.cpp
-        )
+        src/TekstJawny.cpp
+        src/Macierze.cpp include/Macierze.h src/SBox.cpp include/SBox.h)
 #wlacz wskazane pliki do programu wykonywalnego Program
 add_executable(Program ${SOURCE_FILES})
 

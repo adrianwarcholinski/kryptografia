@@ -14,11 +14,15 @@ private:
     string tresc;
     int iloscMacierzy;
     char ***macierze;
+    string kluczPodstawowy;
+    string kluczRozszerzony;
+
     void wypelnijMacierze();
     void utworzMacierze();
     void usunMacierze();
+    void rozszerzKlucz();
 public:
-    tekstJawny(string tresc);
+    tekstJawny(string kluczPodstawowy,string tresc);
     ~tekstJawny();
     void wyswietlMacierze();
 };

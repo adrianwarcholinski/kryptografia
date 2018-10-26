@@ -32,9 +32,8 @@ string wczytajTekst() {
     }
     if(wybor == 1) {
         cout << "Wprowadz tekst:";
-        cin.get();
+        cin.ignore();
         getline(cin, tekst);
-        return tekst;
     }
     else if(wybor==2){
         cout<<"Nazwa pliku: dane.txt"<<endl;
@@ -51,11 +50,32 @@ string wczytajTekst() {
             plik.close();
         } else cout << "Błąd! Nie udalo otworzyc sie pliku!" << endl;
     }
+    return tekst;
+}
+string wczytajKlucz(){
+    string klucz="";
+    cout<<"Wpisz max 16-znakowy klucz:";
+    cin.ignore();
+    while(true) {
+        getline(cin, klucz);
+//        cout<<"DL"<<klucz.length()<<endl;
+        if(klucz.length() <= 16) {
+            break;
+        } else {
+            cout << "Niepoprawny klucz - wpisz poprawny max 16-znakowy klucz: ";
+        }
+    }
+    for(int i = klucz.length(); i<16; i++) {
+        klucz += (char)0;
+    }
+//    cout<<klucz<<endl;
+//    cout << klucz.length() << endl;
+    return klucz;
 }
 
 int main() {
     wyswietlNaglowek();
-    tekstJawny tekstJawny(wczytajTekst());
-    tekstJawny.wyswietlMacierze();
+    tekstJawny tekstJawny(wczytajKlucz(),wczytajTekst());
+    //tekstJawny.wyswietlMacierze();
     return 0;
 }

@@ -19,19 +19,6 @@ SBox::SBox() {
     wczytajSBox();
 }
 
-//else if(wybor == 2) {
-//cout << "Nazwa pliku: dane.txt" << endl;
-//fstream plik;
-//string linia;
-//plik.open( "../dane.txt", ios::in );
-//if( plik.good() ) {
-//while( !plik.eof() ) {
-//getline(plik, linia);
-//tekst.append(linia+'\n');
-//}
-//plik.close();
-//} else cout << "Błąd! Nie udalo otworzyc sie pliku!" << endl;
-
 void SBox::wczytajSBox() {
     fstream plikNormalny;
     fstream plikOdwrocony;

@@ -15,7 +15,6 @@ void wyswietlNaglowek() {
          << "Kamil Piatkowski" << endl;
 }
 
-// Zrobione w stringu, aby nie przejmowac sie dlugoscia ciagu wejsciowego - Adrian
 string wczytajTekst() {
     short wybor;
     string tekst="";

@@ -73,7 +73,7 @@ int main() {
     wyswietlNaglowek();
     SBox* sbox = new SBox();
 
-//    sbox->wyswietlSBoxy();
+    //sbox->wyswietlSBoxy();
 
     TekstJawny tekstJawny(wczytajKlucz(),wczytajTekst());
     tekstJawny.macierze->wyswietlMacierze();

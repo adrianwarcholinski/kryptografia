@@ -1,21 +1,18 @@
-//
-// Created by adria on 26.10.2018.
-//
-
 #ifndef PROGRAM_SBOX_H
 #define PROGRAM_SBOX_H
 
 class SBox {
 private:
-    char** tabelaNormalna;
-    char** tabelaOdwrocona;
+    unsigned char** tabelaNormalna;
+    unsigned char** tabelaOdwrocona;
+
     void wczytajSBox();
 public:
     SBox();
     ~SBox();
     void wyswietlSBoxy();
-    char nowyBajtNormalny(char bajt);
-    char nowyBajtOdwrocony(char bajt);
+    unsigned char nowyBajtNormalny(unsigned char bajt);
+    unsigned char nowyBajtOdwrocony(unsigned char bajt);
 };
 
 

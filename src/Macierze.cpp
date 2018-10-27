@@ -14,6 +14,16 @@ Macierze::Macierze(string tresc) {
     wypelnijMacierze(tresc);
 }
 
+Macierze::~Macierze() {
+    for(int i=0; i<4; i++) {
+        for(int j=0; j<4; j++) {
+            delete[] macierze[i][j];
+        }
+        delete[] macierze[i];
+    }
+    delete[] macierze;
+}
+
 void Macierze::utworzMacierze(string tresc) {
     liczbaMacierzy = int(ceil(tresc.length() * 1.0 / 16));
     macierze = new char **[liczbaMacierzy];

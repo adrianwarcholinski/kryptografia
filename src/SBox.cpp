@@ -10,13 +10,24 @@
 using namespace std;
 
 SBox::SBox() {
-    this->tabelaNormalna = new unsigned char*[16];
-    this->tabelaOdwrocona = new unsigned char*[16];
+    tabelaNormalna = new char*[16];
+    tabelaOdwrocona = new char*[16];
     for(int i=0; i<16; i++) {
-        this->tabelaNormalna[i] = new unsigned char[16];
-        this->tabelaOdwrocona[i] = new unsigned char[16];
+        tabelaNormalna[i] = new char[16];
+        tabelaOdwrocona[i] = new char[16];
     }
     wczytajSBox();
+}
+
+SBox::~SBox() {
+//    char** tabelaNormalna;
+//    char** tabelaOdwrocona;
+    for(int i=0; i<16; i++) {
+        delete[] tabelaNormalna[i];
+        delete[] tabelaOdwrocona[i];
+    }
+    delete[] tabelaNormalna;
+    delete[] tabelaOdwrocona;
 }
 
 void SBox::wczytajSBox() {
@@ -30,10 +41,10 @@ void SBox::wczytajSBox() {
             for(int j=0; j<16; j++) {
                 plikNormalny >> hex >> bufor;
                 plikNormalny.ignore(1);
-                this->tabelaNormalna[i][j] = bufor;
+                tabelaNormalna[i][j] = bufor;
                 plikOdwrocony >> hex >> bufor;
                 plikOdwrocony.ignore(1);
-                this->tabelaOdwrocona[i][j] = bufor;
+                tabelaOdwrocona[i][j] = bufor;
             }
         }
         plikNormalny.close();
@@ -47,31 +58,31 @@ void SBox::wyswietlSBoxy() {
     cout << "SBox normalny: " << endl;
     for(int i=0; i<16; i++) {
         for(int j=0; j<16; j++) {
-            cout << setw(2) << hex << (unsigned int)this->tabelaNormalna[i][j] << ", ";
+            cout << setw(2) << hex << (int)tabelaNormalna[i][j] << ", ";
         }
         cout << endl;
     }
     cout << endl << "SBox odwrocony: " << endl;
     for(int i=0; i<16; i++) {
         for(int j=0; j<16; j++) {
-            cout << setw(2) << (unsigned int)this->tabelaOdwrocona[i][j] << ", ";
+            cout << setw(2) << hex << (int)tabelaOdwrocona[i][j] << ", ";
         }
         cout << endl;
     }
 }
 
-unsigned char SBox::nowyBajtNormalny(unsigned char bajt) {
+char SBox::nowyBajtNormalny(char bajt) {
     unsigned char kopiaBajt = bajt;
     bajt >>= 4; // zostaje wiodaca czesc bajtu
     int wiersz = bajt;
     kopiaBajt <<= 4;
     kopiaBajt >>= 4;
     int kolumna = kopiaBajt;
-    return this->tabelaNormalna[wiersz][kolumna];
+    return tabelaNormalna[wiersz][kolumna];
 }
 
-unsigned char SBox::nowyBajtOdwrocony(unsigned char bajt) {
-    unsigned char kopiaBajt = bajt;
+char SBox::nowyBajtOdwrocony(char bajt) {
+    char kopiaBajt = bajt;
     bajt >>= 4; // zostaje wiodaca czesc bajtu
     int wiersz = bajt;
     cout << "wiersz: " << wiersz;
@@ -79,5 +90,5 @@ unsigned char SBox::nowyBajtOdwrocony(unsigned char bajt) {
     kopiaBajt >>= 4;
     int kolumna = kopiaBajt;
     cout << "kolumna: " << kolumna;
-    return this->tabelaOdwrocona[wiersz][kolumna];
+    return tabelaOdwrocona[wiersz][kolumna];
 }

@@ -15,9 +15,11 @@ public:
     char*** macierze;
 
     Macierze(string tekst);
+    ~Macierze();
     void wyswietlMacierze();
     void wypelnijMacierze(string tekst);
     void utworzMacierze(string tekst);
+    void usunMacierze();
 };
 
 

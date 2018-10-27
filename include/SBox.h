@@ -7,15 +7,15 @@
 
 class SBox {
 private:
-    unsigned char** tabelaNormalna;
-    unsigned char** tabelaOdwrocona;
-
+    char** tabelaNormalna;
+    char** tabelaOdwrocona;
     void wczytajSBox();
 public:
     SBox();
+    ~SBox();
     void wyswietlSBoxy();
-    unsigned char nowyBajtNormalny(unsigned char bajt);
-    unsigned char nowyBajtOdwrocony(unsigned char bajt);
+    char nowyBajtNormalny(char bajt);
+    char nowyBajtOdwrocony(char bajt);
 };
 
 

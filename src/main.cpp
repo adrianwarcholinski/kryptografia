@@ -74,8 +74,8 @@ int main() {
 
 //    sbox->wyswietlSBoxy();
 
-//    TekstJawny tekstJawny(wczytajKlucz(),wczytajTekst());
-//    tekstJawny.macierze->wyswietlMacierze();
+    TekstJawny tekstJawny(wczytajKlucz(),wczytajTekst());
+    tekstJawny.macierze->wyswietlMacierze();
 
     cin.get(); // na potrzeby uruchamiania z wiersza polecen
     return 0;

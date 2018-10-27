@@ -80,6 +80,7 @@ int main() {
     tekstJawny.macierze->shiftRows();
     cout<<"shift:"<<endl;
     tekstJawny.macierze->wyswietlMacierze();
+    tekstJawny.macierze->mixColumns();
 
     //cin.get(); // na potrzeby uruchamiania z wiersza polecen
     return 0;

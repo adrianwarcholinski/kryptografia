@@ -101,16 +101,24 @@ void Macierze::substituteBytes() {
     delete sbox;
 }
 
-//void Macierze::mixColumns() {
-//    char macierzStala[4][4]={{2,3,1,1},{1,2,3,1},{1,1,2,3},{3,1,12}};
-//    for (int i = 0; i < liczbaMacierzyStanu; i++) {
-//        for (int j = 0; j < 4; j++) {
-//            for (int k = 0; k < 4; k++) {
-//
-//                }
-//            }
-//        }
-//    }
-//}
+void Macierze::mixColumns() {  //zły - wychodzacy poza zakres
+    char macierzStala[4][4]={{2,3,1,1},{1,2,3,1},{1,1,2,3},{3,1,1,2}};
+    char kolumna[4];
+    char bufor;
+    for (int i = 0; i < liczbaMacierzyStanu; i++) {
+        for (int k = 0; k < 4; k++) {
+            for (int j = 0; j < 4; j++) {
+                bufor=0;
+                for(int a=0;a<4;a++){
+                        bufor += macierze[i][a][k] * macierzStala[j][a];
+                }
+                kolumna[j]=bufor;
+            }
+            for(int b=0;b<4;b++){
+                macierze[i][b][k]=kolumna[b];
+            }
+        }
+   }
+}
 
 

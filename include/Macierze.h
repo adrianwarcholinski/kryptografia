@@ -10,16 +10,24 @@
 using namespace std;
 
 class Macierze {
-public:
-    int liczbaMacierzy;
-    char*** macierze;
 
+
+public:
+    char*** macierze;   //macierze[i][j][k]: i-numer macierzy stanu;j-numer wiersza w macierzy stanu;k- numer kolumny w macierzy stanu.
     Macierze(string tekst);
     ~Macierze();
     void wyswietlMacierze();
-    void wypelnijMacierze(string tekst);
+
+
+    int liczbaMacierzyStanu;
     void utworzMacierze(string tekst);
+    void wypelnijMacierze(string tekst);
     void usunMacierze();
+    void shiftRows();
+    void substituteBytes();
+    void mixColumns();
+
+
 };
 
 

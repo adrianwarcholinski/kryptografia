@@ -24,6 +24,7 @@ string wczytajTekst() {
          << "Wybierz opcje: ";
     while(true) {
         cin >> wybor;
+        cin.ignore();
         if((wybor == 1) || (wybor == 2)) {
             break;
         } else {
@@ -32,7 +33,6 @@ string wczytajTekst() {
     }
     if(wybor == 1) {
         cout << "Wprowadz tekst:";
-        cin.ignore();
         getline(cin, tekst);
     }
     else if(wybor == 2) {
@@ -53,7 +53,6 @@ string wczytajTekst() {
 string wczytajKlucz(){
     string klucz="";
     cout << "Wpisz max 16-znakowy klucz:";
-    cin.ignore();
     while(true) {
         getline(cin, klucz);
         if(klucz.length() <= 16) {
@@ -65,6 +64,8 @@ string wczytajKlucz(){
     for(int i = klucz.length(); i<16; i++) {
         klucz += (char)0;
     }
+    //cout<<"Klucz: "<<klucz<<endl;
+    //cout<<"KL"<<klucz.length()<<endl;
     return klucz;
 }
 
@@ -76,7 +77,10 @@ int main() {
 
     TekstJawny tekstJawny(wczytajKlucz(),wczytajTekst());
     tekstJawny.macierze->wyswietlMacierze();
+    tekstJawny.macierze->shiftRows();
+    cout<<"shift:"<<endl;
+    tekstJawny.macierze->wyswietlMacierze();
 
-    cin.get(); // na potrzeby uruchamiania z wiersza polecen
+    //cin.get(); // na potrzeby uruchamiania z wiersza polecen
     return 0;
 }

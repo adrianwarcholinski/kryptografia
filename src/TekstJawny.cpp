@@ -21,22 +21,63 @@ TekstJawny::~TekstJawny() {
     delete[] macierze;
 }
 
+unsigned int potega(unsigned int podstawa, unsigned int wykladnik) {
+    unsigned int wynik = 1;
+    for(int i=1; i<=wykladnik; i++) {
+        wynik *= podstawa;
+    }
+    return wynik;
+}
+
 void TekstJawny::rozszerzKlucz() {
     SBox* sbox = new SBox();
     this->kluczRozszerzony = kluczPodstawowy;
 
-    for(int iteracja=1; iteracja<=10; iteracja++) {
-        vector<char> tempVector(4);
+    for(int a=0; a<10; a++) {
+        vector<unsigned char> tempVector(4);
         for(int i=0; i<tempVector.size(); i++) {
-            tempVector[i] = kluczPodstawowy[kluczPodstawowy.length()-4+i];
+            tempVector[i] = kluczRozszerzony[kluczRozszerzony.length()-4+i];
         }
+
         for(int i=0; i<tempVector.size()-1; i++) {
             swap(tempVector[i],tempVector[i+1]);
         }
+
         for(int i=0; i<tempVector.size(); i++) {
-            cout << "tempVector: " << (int)tempVector[i] << " podmieniony na ";
             tempVector[i] = sbox->nowyBajtNormalny(tempVector[i]);
-            cout << hex << (int)tempVector[i] << endl;
+        }
+
+        tempVector[0] = tempVector[0] ^ potega(2, a);
+
+        vector<unsigned char> tempVector2(4);
+
+        for(int i=0; i<tempVector2.size(); i++) {
+            tempVector2[i] = kluczRozszerzony[kluczRozszerzony.length()-16+i];
+        }
+
+        for(int i=0; i<tempVector2.size(); i++) {
+            tempVector[i] ^= tempVector2[i];
+        }
+
+        for(int i=0; i<tempVector2.size(); i++) {
+            kluczRozszerzony += tempVector[i];
+        }
+        vector<unsigned char> tempVector3(4);
+        vector<unsigned char> tempVector4(4);
+
+        for(int i=0; i<3; i++) {
+            for(int j=0; j<tempVector3.size(); j++) {
+                tempVector3[j] = kluczRozszerzony[kluczRozszerzony.length()-4+j];
+            }
+            for(int j=0; j<tempVector4.size(); j++) {
+                tempVector4[j] = kluczRozszerzony[kluczRozszerzony.length()-16+j];
+            }
+            for(int j=0; j<tempVector4.size(); j++) {
+                tempVector3[j] ^= tempVector4[j];
+            }
+            for(int j=0; j<tempVector3.size(); j++) {
+                kluczRozszerzony += tempVector3[j];
+            }
         }
     }
 }

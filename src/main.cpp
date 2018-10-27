@@ -24,6 +24,7 @@ string wczytajTekst() {
          << "Wybierz opcje: ";
     while(true) {
         cin >> wybor;
+        cin.ignore();
         if((wybor == 1) || (wybor == 2)) {
             break;
         } else {
@@ -53,7 +54,6 @@ string wczytajTekst() {
 string wczytajKlucz(){
     string klucz="";
     cout << "Wpisz max 16-znakowy klucz:";
-    cin.ignore();
     while(true) {
         getline(cin, klucz);
         if(klucz.length() <= 16) {
@@ -72,10 +72,10 @@ int main() {
     wyswietlNaglowek();
     SBox* sbox = new SBox();
 
-//    sbox->wyswietlSBoxy();
+    //sbox->wyswietlSBoxy();
 
     TekstJawny tekstJawny(wczytajKlucz(),wczytajTekst());
-    tekstJawny.macierze->wyswietlMacierze();
+    //tekstJawny.macierze->wyswietlMacierze();
 
     cin.get(); // na potrzeby uruchamiania z wiersza polecen
     return 0;

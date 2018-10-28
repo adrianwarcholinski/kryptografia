@@ -71,16 +71,12 @@ string wczytajKlucz(){
 
 int main() {
     wyswietlNaglowek();
-    SBox* sbox = new SBox();
+    //SBox* sbox = new SBox(); -- wyciek
 
     //sbox->wyswietlSBoxy();
 
     TekstJawny tekstJawny(wczytajKlucz(),wczytajTekst());
     tekstJawny.macierze->wyswietlMacierze();
-    tekstJawny.macierze->shiftRows();
-    cout<<"shift:"<<endl;
-    tekstJawny.macierze->wyswietlMacierze();
-    tekstJawny.macierze->mixColumns();
 
     //cin.get(); // na potrzeby uruchamiania z wiersza polecen
     return 0;

@@ -18,7 +18,7 @@ TekstJawny::TekstJawny(string kluczPodstawowy, string tresc) {
 }
 
 TekstJawny::~TekstJawny() {
-    delete[] macierze;
+    delete macierze;
 }
 
 unsigned int potega(unsigned int podstawa, unsigned int wykladnik) {
@@ -80,5 +80,6 @@ void TekstJawny::rozszerzKlucz() {
             }
         }
     }
+    delete sbox;
 }
 

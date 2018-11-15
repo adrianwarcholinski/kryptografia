@@ -22,6 +22,7 @@ public:
     Macierze* macierze;
     TekstJawny(string kluczPodstawowy,string tresc);
     ~TekstJawny();
+    void addRoundKey();
 };
 
 

@@ -77,7 +77,8 @@ int main() {
 
     TekstJawny tekstJawny(wczytajKlucz(),wczytajTekst());
     tekstJawny.macierze->wyswietlMacierze();
-
-    //cin.get(); // na potrzeby uruchamiania z wiersza polecen
+    tekstJawny.macierze->mixColumns();
+    tekstJawny.macierze->wyswietlMacierze();
+    cin.get(); // na potrzeby uruchamiania z wiersza polecen
     return 0;
 }

@@ -23,11 +23,11 @@ Macierze::~Macierze() {
 
 void Macierze::utworzMacierze(string tresc) {
     liczbaMacierzyStanu = int(ceil(tresc.length() * 1.0 / 16));
-    macierze = new char **[liczbaMacierzyStanu];
+    macierze = new unsigned char **[liczbaMacierzyStanu];
     for (int i(0); i < liczbaMacierzyStanu; ++i) {
-        macierze[i] = new char *[4];
+        macierze[i] = new unsigned char *[4];
         for (int j(0); j < 4; ++j) {
-            macierze[i][j] = new char[4];
+            macierze[i][j] = new unsigned char[4];
         }
     }
 }
@@ -47,13 +47,17 @@ void Macierze::wypelnijMacierze(string tresc) {
             }
         }
     }
+    macierze[0][0][0]=1;
+    macierze[0][1][0]=1;
+    macierze[0][2][0]=1;
+    macierze[0][3][0]=1;
 }
 
 void Macierze::wyswietlMacierze() {
     for (int i = 0; i < liczbaMacierzyStanu; i++) {
         for (int j = 0; j < 4; j++) {
             for (int k = 0; k < 4; k++) {
-                cout << macierze[i][j][k];
+                cout << dec<<int(macierze[i][j][k]);
             }
             cout << endl;
         }
@@ -102,21 +106,27 @@ void Macierze::substituteBytes() {
 }
 
 void Macierze::mixColumns() {  //zły - wychodzacy poza zakres
-    char macierzStala[4][4]={{2,3,1,1},{1,2,3,1},{1,1,2,3},{3,1,1,2}};
-    char kolumna[4];
-    char bufor;
+
+    unsigned char macierzStala[4][4]={{2,3,1,1},{1,2,3,1},{1,1,2,3},{3,1,1,2}};
+    unsigned char kolumna[4];
+    unsigned char bufor;
     for (int i = 0; i < liczbaMacierzyStanu; i++) {
         for (int k = 0; k < 4; k++) {
-            for (int j = 0; j < 4; j++) {
-                bufor=0;
-                for(int a=0;a<4;a++){
-                        bufor += macierze[i][a][k] * macierzStala[j][a];
-                }
-                kolumna[j]=bufor;
+
+            unsigned char a[4];
+            unsigned char b[4];
+            unsigned char h;
+            for (int c = 0; c < 4; c++) {
+                a[c] = macierze[i][c][k];
+                h = (unsigned char)((signed char)macierze[i][c][k] >> 7);
+                b[c] =macierze[i][c][k] << 1;
+                b[c] ^= 0x1B & h;
             }
-            for(int b=0;b<4;b++){
-                macierze[i][b][k]=kolumna[b];
-            }
+            macierze[i][0][k]  = b[0] ^ a[3] ^ a[2] ^ b[1] ^ a[1];
+            macierze[i][1][k]  = b[1] ^ a[0] ^ a[3] ^ b[2] ^ a[2];
+            macierze[i][2][k]  = b[2] ^ a[1] ^ a[0] ^ b[3] ^ a[3];
+            macierze[i][3][k]  = b[3] ^ a[2] ^ a[1] ^ b[0] ^ a[0];
+
         }
    }
 }

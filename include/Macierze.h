@@ -13,7 +13,7 @@ class Macierze {
 
 
 public:
-    char*** macierze;   //macierze[i][j][k]: i-numer macierzy stanu;j-numer wiersza w macierzy stanu;k- numer kolumny w macierzy stanu.
+    unsigned char*** macierze;   //macierze[i][j][k]: i-numer macierzy stanu;j-numer wiersza w macierzy stanu;k- numer kolumny w macierzy stanu.
     Macierze(string tekst);
     ~Macierze();
     void wyswietlMacierze();

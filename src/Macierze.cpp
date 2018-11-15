@@ -47,17 +47,13 @@ void Macierze::wypelnijMacierze(string tresc) {
             }
         }
     }
-    macierze[0][0][0]=1;
-    macierze[0][1][0]=1;
-    macierze[0][2][0]=1;
-    macierze[0][3][0]=1;
 }
 
 void Macierze::wyswietlMacierze() {
     for (int i = 0; i < liczbaMacierzyStanu; i++) {
         for (int j = 0; j < 4; j++) {
             for (int k = 0; k < 4; k++) {
-                cout << dec<<int(macierze[i][j][k]);
+                cout << macierze[i][j][k];
             }
             cout << endl;
         }
@@ -105,14 +101,9 @@ void Macierze::substituteBytes() {
     delete sbox;
 }
 
-void Macierze::mixColumns() {  //zły - wychodzacy poza zakres
-
-    unsigned char macierzStala[4][4]={{2,3,1,1},{1,2,3,1},{1,1,2,3},{3,1,1,2}};
-    unsigned char kolumna[4];
-    unsigned char bufor;
+void Macierze::mixColumns() {
     for (int i = 0; i < liczbaMacierzyStanu; i++) {
         for (int k = 0; k < 4; k++) {
-
             unsigned char a[4];
             unsigned char b[4];
             unsigned char h;
@@ -126,9 +117,43 @@ void Macierze::mixColumns() {  //zły - wychodzacy poza zakres
             macierze[i][1][k]  = b[1] ^ a[0] ^ a[3] ^ b[2] ^ a[2];
             macierze[i][2][k]  = b[2] ^ a[1] ^ a[0] ^ b[3] ^ a[3];
             macierze[i][3][k]  = b[3] ^ a[2] ^ a[1] ^ b[0] ^ a[0];
-
         }
    }
+}
+
+void Macierze::inverseShiftRows() {
+    int i;
+    if(liczbaMacierzyStanu-3<0){
+        i=0;
+    }
+    else{
+        i=liczbaMacierzyStanu-3;
+    }
+    for(;i<liczbaMacierzyStanu;i++){
+        for(int j=1;j<4;j++){
+            for(int a=0;a<j;a++) {
+                for (int b = 2; b >= 0; b--) {
+                    swap(macierze[i][j][b], macierze[i][j][b + 1]);
+                }
+            }
+        }
+    }
+}
+
+void Macierze::inverseSubstituteBytes() {
+    SBox* sbox=new SBox();
+    for (int i = 0; i < liczbaMacierzyStanu; i++) {
+        for (int j = 0; j < 4; j++) {
+            for (int k = 0; k < 4; k++) {
+                macierze[i][j][k]=sbox->nowyBajtOdwrocony(macierze[i][j][k]);
+            }
+        }
+    }
+    delete sbox;
+}
+
+void Macierze::inverseMixColumns() {
+ 
 }
 
 

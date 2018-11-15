@@ -26,6 +26,9 @@ public:
     void shiftRows();
     void substituteBytes();
     void mixColumns();
+    void inverseShiftRows();
+    void inverseSubstituteBytes();
+    void inverseMixColumns();
 
 
 };

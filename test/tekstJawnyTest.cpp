@@ -1,6 +1,6 @@
 #include <boost/test/unit_test.hpp>
 
-#include "TekstJawny.h"
+#include "Tekst.h"
 
 BOOST_AUTO_TEST_SUITE(TestSuiteCorrect)
 

@@ -10,19 +10,19 @@
 
 using namespace std;
 
-class TekstJawny {
+class Tekst {
 private:
     string tresc;
-    int iloscMacierzy;
     string kluczPodstawowy;
     string kluczRozszerzony;
 
     void rozszerzKlucz();
 public:
     Macierze* macierze;
-    TekstJawny(string kluczPodstawowy,string tresc);
-    ~TekstJawny();
+    Tekst(string kluczPodstawowy,string tresc);
+    ~Tekst();
     void addRoundKey(int round);
+    int getIloscMacierzy() const;
 };
 
 

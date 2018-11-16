@@ -7,17 +7,17 @@
 #include <string>
 #include <cmath>
 #include <vector>
-#include "TekstJawny.h"
+#include "Tekst.h"
 #include "SBox.h"
 
-TekstJawny::TekstJawny(string kluczPodstawowy, string tresc) {
+Tekst::Tekst(string kluczPodstawowy, string tresc) {
     this->tresc = tresc;
     this->kluczPodstawowy = kluczPodstawowy;
     this->macierze = new Macierze(tresc);
     rozszerzKlucz();
 }
 
-TekstJawny::~TekstJawny() {
+Tekst::~Tekst() {
     delete macierze;
 }
 
@@ -29,7 +29,7 @@ unsigned int potega(unsigned int podstawa, unsigned int wykladnik) {
     return wynik;
 }
 
-void TekstJawny::rozszerzKlucz() {
+void Tekst::rozszerzKlucz() {
     SBox* sbox = new SBox();
     this->kluczRozszerzony = kluczPodstawowy;
 
@@ -83,10 +83,9 @@ void TekstJawny::rozszerzKlucz() {
     delete sbox;
 }
 
-void TekstJawny::addRoundKey(int round) {
-    for(int i=0; i<iloscMacierzy; i++) {
-        string roundKey = kluczRozszerzony.substr(round*16, round*16+15);
-
+void Tekst::addRoundKey(int round) {
+    string roundKey = kluczRozszerzony.substr(round*16, 16);
+    for(int i=0; i<macierze->liczbaMacierzyStanu; i++) {
         for(int j=0; j<4; j++) {
             for(int k=0; k<4; k++) {
                 macierze->macierze[i][j][k] ^= roundKey.at(j*4+k);

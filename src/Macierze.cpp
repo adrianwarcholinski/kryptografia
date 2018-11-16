@@ -47,21 +47,13 @@ void Macierze::wypelnijMacierze(string tresc) {
             }
         }
     }
-    macierze[0][0][0]=142;
-    macierze[0][1][0]=77;
-    macierze[0][2][0]=161;
-    macierze[0][3][0]=188;
-    macierze[0][0][1]=159;
-    macierze[0][1][1]=220;
-    macierze[0][2][1]=88;
-    macierze[0][3][1]=157;
 }
 
 void Macierze::wyswietlMacierze() {
     for (int i = 0; i < liczbaMacierzyStanu; i++) {
         for (int j = 0; j < 4; j++) {
             for (int k = 0; k < 4; k++) {
-                cout <<dec<< (int)macierze[i][j][k] << " ";
+                cout <<macierze[i][j][k] << " ";
             }
             cout << endl;
         }

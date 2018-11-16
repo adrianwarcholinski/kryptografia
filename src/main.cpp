@@ -2,7 +2,7 @@
 #include <cstdlib>
 #include <string>
 #include <fstream>
-#include "TekstJawny.h"
+#include "Tekst.h"
 #include "SBox.h"
 
 using namespace std;
@@ -50,30 +50,58 @@ string wczytajTekst() {
     }
     return tekst;
 }
-string wczytajKlucz(){
-    string klucz="";
+string wczytajKlucz() {
+    string klucz = "";
     cout << "Wpisz max 16-znakowy klucz:";
-    while(true) {
+    while (true) {
         getline(cin, klucz);
-        if(klucz.length() <= 16) {
+        if (klucz.length() <= 16) {
             break;
         } else {
             cout << "Niepoprawny klucz - wpisz poprawny max 16-znakowy klucz: ";
         }
     }
-    for(int i = klucz.length(); i<16; i++) {
-        klucz += (char)0;
+    for (int i = klucz.length(); i < 16; i++) {
+        klucz += (char) 0;
     }
     //cout<<"Klucz: "<<klucz<<endl;
     //cout<<"KL"<<klucz.length()<<endl;
     return klucz;
 }
 
+void encrypt(Tekst &tekstJawny) {
+    tekstJawny.addRoundKey(0);
+    for(int i=1; i<=9; i++) {
+        tekstJawny.macierze->substituteBytes();
+        tekstJawny.macierze->shiftRows();
+        tekstJawny.macierze->mixColumns();
+        tekstJawny.addRoundKey(i);
+    }
+    tekstJawny.macierze->substituteBytes();
+    tekstJawny.macierze->shiftRows();
+    tekstJawny.addRoundKey(10);
+}
+
+void decrypt(Tekst &szyfrogram) {
+    szyfrogram.addRoundKey(10);
+    szyfrogram.macierze->inverseShiftRows();
+    szyfrogram.macierze->inverseSubstituteBytes();
+    for (int i = 1; i <= 9; i++) {
+        szyfrogram.addRoundKey(10 - i);
+        szyfrogram.macierze->inverseMixColumns();
+        szyfrogram.macierze->inverseShiftRows();
+        szyfrogram.macierze->inverseSubstituteBytes();
+    }
+    szyfrogram.addRoundKey(0);
+}
+
 int main() {
     wyswietlNaglowek();
-    TekstJawny tekstJawny(wczytajKlucz(),wczytajTekst());
-    tekstJawny.macierze->wyswietlMacierze();
-    tekstJawny.addRoundKey(0);
-    cin.get(); // na potrzeby uruchamiania z wiersza polecen
+    Tekst tekst(wczytajKlucz(),wczytajTekst());
+    tekst.macierze->wyswietlMacierze();
+    encrypt(tekst);
+    decrypt(tekst);
+    tekst.macierze->wyswietlMacierze();
+
     return 0;
 }

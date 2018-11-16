@@ -12,10 +12,8 @@ using namespace std;
 
 class Tekst {
 private:
-
-
-
     void rozszerzKlucz();
+    void replaceTresc();
 public:
     string kluczPodstawowy;
     string kluczRozszerzony;
@@ -24,7 +22,6 @@ public:
     Tekst(string kluczPodstawowy,string tresc);
     ~Tekst();
     void addRoundKey(int round);
-    int getIloscMacierzy() const;
 };
 
 

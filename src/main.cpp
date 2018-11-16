@@ -121,8 +121,6 @@ int main() {
     cout<<"-------------"<<endl;
     encrypt(tekst);
     tekst.macierze->wyswietlMacierze();
-    cout<<"-------------"<<endl;
-    zapiszDoPlikow(&tekst);
     decrypt(tekst);
     tekst.macierze->wyswietlMacierze();
 

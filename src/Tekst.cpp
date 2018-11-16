@@ -12,6 +12,18 @@
 #include "Tekst.h"
 #include "SBox.h"
 
+void Tekst::replaceTresc() {
+    string tempStr = "";
+    for(int i=0; i<macierze->liczbaMacierzyStanu; i++) {
+        for(int w=0; w<4; w++) {
+            for(int k=0; k<4; k++) {
+                tempStr += macierze->macierze[i][w][k];
+            }
+        }
+    }
+    tresc = tempStr;
+}
+
 Tekst::Tekst(string kluczPodstawowy, string tresc) {
     this->tresc = tresc;
     this->kluczPodstawowy = kluczPodstawowy;
@@ -94,6 +106,6 @@ void Tekst::addRoundKey(int round) {
             }
         }
     }
+    replaceTresc();
 }
-
 

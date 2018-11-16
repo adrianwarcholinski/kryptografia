@@ -36,10 +36,11 @@ void zapiszDoPlikow(Tekst* tekst){
         plik.close();
     }
     else cout << "Blad - nie udalo sie otworzyc pliku" << endl;
+
     fstream plik2;
-    plik.open( "../key.txt", ios::out );
+    plik2.open( "../key.txt", ios::out );
     if( plik2.good() ) {
-        plik2<<tekst->kluczRozszerzony;
+        plik2 << tekst->kluczRozszerzony;
         plik2.close();
     }
     else cout << "Blad - nie udalo sie otworzyc pliku" << endl;
@@ -114,15 +115,20 @@ void decrypt(Tekst &szyfrogram) {
     szyfrogram.addRoundKey(0);
 }
 
+void saveKey(Tekst *tekst) {
+
+}
+
 int main() {
     wyswietlNaglowek();
     Tekst tekst(wczytajKlucz(),wczytajTekst());
-    tekst.macierze->wyswietlMacierze();
+//    tekst.macierze->wyswietlMacierze();
     cout<<"-------------"<<endl;
     encrypt(tekst);
-    tekst.macierze->wyswietlMacierze();
+    zapiszDoPlikow(&tekst);
+//    tekst.macierze->wyswietlMacierze();
     decrypt(tekst);
-    tekst.macierze->wyswietlMacierze();
+//    tekst.macierze->wyswietlMacierze();
 
     return 0;
 }

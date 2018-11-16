@@ -109,3 +109,7 @@ void Tekst::addRoundKey(int round) {
     replaceTresc();
 }
 
+string Tekst::kluczRozszerzonyLast16() {
+    return kluczRozszerzony.substr(160, 16);
+}
+

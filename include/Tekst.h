@@ -22,6 +22,9 @@ public:
     Tekst(string kluczPodstawowy,string tresc);
     ~Tekst();
     void addRoundKey(int round);
+
+    // do usuniecia
+    string kluczRozszerzonyLast16();
 };
 
 

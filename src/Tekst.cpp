@@ -7,6 +7,8 @@
 #include <string>
 #include <cmath>
 #include <vector>
+#include <Tekst.h>
+
 #include "Tekst.h"
 #include "SBox.h"
 
@@ -93,4 +95,5 @@ void Tekst::addRoundKey(int round) {
         }
     }
 }
+
 

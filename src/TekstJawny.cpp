@@ -83,19 +83,9 @@ void TekstJawny::rozszerzKlucz() {
     delete sbox;
 }
 
-void TekstJawny::addRoundKey() {
+void TekstJawny::addRoundKey(int round) {
     for(int i=0; i<iloscMacierzy; i++) {
-        string roundKey = kluczRozszerzony.substr(i*16, i*16+15);
-
-//        cout << "Klucz rundy: " << roundKey << endl;
-//        unsigned char* uc = (unsigned char*)myString.c_str();
-//        unsigned char* roundKey1 = (unsigned char*)roundKey.substr(0,3).c_str();
-//        unsigned char* roundKey2 = (unsigned char*)roundKey.substr(4,7).c_str();
-//        unsigned char* roundKey3 = (unsigned char*)roundKey.substr(8,11).c_str();
-//        unsigned char* roundKey4 = (unsigned char*)roundKey.substr(12,15).c_str();
-
-//        cout << "Przed xorem: " << endl;
-//        macierze->wyswietlMacierze();
+        string roundKey = kluczRozszerzony.substr(round*16, round*16+15);
 
         for(int j=0; j<4; j++) {
             for(int k=0; k<4; k++) {

@@ -47,13 +47,21 @@ void Macierze::wypelnijMacierze(string tresc) {
             }
         }
     }
+    macierze[0][0][0]=142;
+    macierze[0][1][0]=77;
+    macierze[0][2][0]=161;
+    macierze[0][3][0]=188;
+    macierze[0][0][1]=159;
+    macierze[0][1][1]=220;
+    macierze[0][2][1]=88;
+    macierze[0][3][1]=157;
 }
 
 void Macierze::wyswietlMacierze() {
     for (int i = 0; i < liczbaMacierzyStanu; i++) {
         for (int j = 0; j < 4; j++) {
             for (int k = 0; k < 4; k++) {
-                cout << macierze[i][j][k];
+                cout <<dec<< (int)macierze[i][j][k] << " ";
             }
             cout << endl;
         }
@@ -101,22 +109,35 @@ void Macierze::substituteBytes() {
     delete sbox;
 }
 
+char GMul(char a, char b) { // Galois Field (256) Multiplication of two Bytes
+    char p = 0;
+
+    for (int counter = 0; counter < 8; counter++) {
+        if ((b & 1) != 0) {
+            p ^= a;
+        }
+
+        bool hi_bit_set = (a & 0x80) != 0;
+        a <<= 1;
+        if (hi_bit_set) {
+            a ^= 0x1B; /* x^8 + x^4 + x^3 + x + 1 */
+        }
+        b >>= 1;
+    }
+    return p;
+}
+
 void Macierze::mixColumns() {
+    unsigned char bufor[4];
     for (int i = 0; i < liczbaMacierzyStanu; i++) {
-        for (int k = 0; k < 4; k++) {
-            unsigned char a[4];
-            unsigned char b[4];
-            unsigned char h;
-            for (int c = 0; c < 4; c++) {
-                a[c] = macierze[i][c][k];
-                h = (unsigned char)((signed char)macierze[i][c][k] >> 7);
-                b[c] =macierze[i][c][k] << 1;
-                b[c] ^= 0x1B & h;
-            }
-            macierze[i][0][k]  = b[0] ^ a[3] ^ a[2] ^ b[1] ^ a[1];
-            macierze[i][1][k]  = b[1] ^ a[0] ^ a[3] ^ b[2] ^ a[2];
-            macierze[i][2][k]  = b[2] ^ a[1] ^ a[0] ^ b[3] ^ a[3];
-            macierze[i][3][k]  = b[3] ^ a[2] ^ a[1] ^ b[0] ^ a[0];
+            for (int k = 0; k < 4; k++) { // s[0,c]
+                bufor[0] = (unsigned char)(GMul(0x02, macierze[i][0][k]) ^ GMul(0x03, macierze[i][1][k]) ^ macierze[i][2][k] ^ macierze[i][3][k]);
+                bufor[1] = (unsigned char)(macierze[i][0][k] ^ GMul(0x02, macierze[i][1][k]) ^ GMul(0x03, macierze[i][2][k]) ^ macierze[i][3][k]);
+                bufor[2] = (unsigned char)(macierze[i][0][k] ^ macierze[i][1][k] ^ GMul(0x02, macierze[i][2][k]) ^ GMul(0x03, macierze[i][3][k]));
+                bufor[3] = (unsigned char)(GMul(0x03, macierze[i][0][k]) ^ macierze[i][1][k] ^ macierze[i][2][k] ^ GMul(0x02, macierze[i][3][k]));
+                for(int b=0;b<4;b++){
+                    macierze[i][b][k]=bufor[b];
+                }
         }
    }
 }
@@ -153,7 +174,18 @@ void Macierze::inverseSubstituteBytes() {
 }
 
 void Macierze::inverseMixColumns() {
- 
+    unsigned char bufor[4];
+    for (int i = 0; i < liczbaMacierzyStanu; i++) {
+        for (int k = 0; k < 4; k++) { // s[0,c]
+            bufor[0] = (unsigned char)(GMul(14, macierze[i][0][k]) ^ GMul(11, macierze[i][1][k]) ^ GMul(13, macierze[i][2][k]) ^ GMul(9, macierze[i][3][k]));
+            bufor[1] = (unsigned char)(GMul(9, macierze[i][0][k]) ^ GMul(14, macierze[i][1][k]) ^ GMul(11, macierze[i][2][k]) ^ GMul(13, macierze[i][3][k]));
+            bufor[2] = (unsigned char)(GMul(13, macierze[i][0][k]) ^ GMul(9, macierze[i][1][k]) ^ GMul(14, macierze[i][2][k]) ^ GMul(11, macierze[i][3][k]));
+            bufor[3] = (unsigned char)(GMul(11, macierze[i][0][k]) ^ GMul(13, macierze[i][1][k]) ^ GMul(9, macierze[i][2][k]) ^ GMul(14, macierze[i][3][k]));
+            for(int b=0;b<4;b++){
+                macierze[i][b][k]=bufor[b];
+            }
+        }
+    }
 }
 
 

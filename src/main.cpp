@@ -71,14 +71,9 @@ string wczytajKlucz(){
 
 int main() {
     wyswietlNaglowek();
-    //SBox* sbox = new SBox(); -- wyciek
-
-    //sbox->wyswietlSBoxy();
-
     TekstJawny tekstJawny(wczytajKlucz(),wczytajTekst());
     tekstJawny.macierze->wyswietlMacierze();
-    tekstJawny.macierze->inverseShiftRows();
-    tekstJawny.macierze->wyswietlMacierze();
+    tekstJawny.addRoundKey(0);
     cin.get(); // na potrzeby uruchamiania z wiersza polecen
     return 0;
 }

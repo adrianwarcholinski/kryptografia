@@ -47,6 +47,7 @@ void Macierze::wypelnijMacierze(string tresc) {
             }
         }
     }
+    cout<<"----------------------"<<endl;
 }
 
 void Macierze::wyswietlMacierze() {

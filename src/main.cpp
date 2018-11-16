@@ -73,20 +73,41 @@ string wczytajTekst() {
 }
 
 string wczytajKlucz() {
+    short wybor;
     string klucz = "";
-    cout << "Wpisz max 16-znakowy klucz:";
-    while (true) {
-        getline(cin, klucz);
-        if (klucz.length() <= 16) {
+    cout << "Podaj metode wprowadzania danych:" << endl
+         << "[1] Klucz wprowadzony z klawiatury" << endl
+         << "[2] Klucz wczytywany z pliku" << endl
+         << "Wybierz opcje: ";
+    while(true) {
+        cin >> wybor;
+        cin.ignore();
+        if((wybor == 1) || (wybor == 2)) {
             break;
         } else {
-            cout << "Niepoprawny klucz - wpisz poprawny max 16-znakowy klucz: ";
+            cout << "Nieprawidlowa opcja. Wybierz opcje: ";
         }
     }
-    for (int i = klucz.length(); i < 16; i++) {
-        klucz += (char) 0;
+    if(wybor == 1) {
+        cout << "Wpisz max 16-znakowy klucz:";
+        while (true) {
+            getline(cin, klucz);
+            if (klucz.length() <= 16) {
+                break;
+            } else {
+                cout << "Niepoprawny klucz - wpisz poprawny max 16-znakowy klucz: ";
+            }
+        }
+        for (int i = klucz.length(); i < 16; i++) {
+            klucz += (char) 0;
+        }
+        return klucz;
     }
-    return klucz;
+    else if(wybor == 2) {
+        cout << "Nazwa pliku: key.txt" << endl;
+        return wczytajZPliku("../key.txt");
+    }
+
 }
 
 void encrypt(Tekst &tekstJawny) {
@@ -122,14 +143,18 @@ void saveKey(Tekst *tekst) {
 int main() {
     wyswietlNaglowek();
     Tekst tekst(wczytajKlucz(),wczytajTekst());
-//    tekst.macierze->wyswietlMacierze();
+    tekst.macierze->wyswietlMacierze();
+    cin.get();
     cout<<"-------------"<<endl;
     encrypt(tekst);
+    tekst.macierze->wyswietlMacierze();
+    cin.get();
     zapiszDoPlikow(&tekst);
     tekst.kluczRozszerzony=wczytajZPliku("../key.txt");
     tekst.tresc=wczytajZPliku("../cipher.txt");
     tekst.macierze=new Macierze(tekst.tresc);
-   //tekst.macierze->wyswietlMacierze();
+   tekst.macierze->wyswietlMacierze();
+   cin.get();
     decrypt(tekst);
     tekst.macierze->wyswietlMacierze();
 

@@ -12,12 +12,14 @@ using namespace std;
 
 class Tekst {
 private:
-    string tresc;
-    string kluczPodstawowy;
-    string kluczRozszerzony;
+
+
 
     void rozszerzKlucz();
 public:
+    string kluczPodstawowy;
+    string kluczRozszerzony;
+    string tresc;
     Macierze* macierze;
     Tekst(string kluczPodstawowy,string tresc);
     ~Tekst();

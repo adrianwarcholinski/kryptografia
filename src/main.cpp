@@ -28,6 +28,22 @@ string wczytajZPliku(string nazwa){
     } else cout << "Blad - nie udalo sie otworzyc pliku" << endl;
     return tekst;
 }
+void zapiszDoPlikow(Tekst* tekst){
+    fstream plik;
+    plik.open( "../cipher.txt", ios::out );
+    if( plik.good() ) {
+        plik<<tekst->tresc;
+        plik.close();
+    }
+    else cout << "Blad - nie udalo sie otworzyc pliku" << endl;
+    fstream plik2;
+    plik.open( "../key.txt", ios::out );
+    if( plik2.good() ) {
+        plik2<<tekst->kluczRozszerzony;
+        plik2.close();
+    }
+    else cout << "Blad - nie udalo sie otworzyc pliku" << endl;
+}
 string wczytajTekst() {
     short wybor;
     string tekst="";
@@ -106,6 +122,7 @@ int main() {
     encrypt(tekst);
     tekst.macierze->wyswietlMacierze();
     cout<<"-------------"<<endl;
+    zapiszDoPlikow(&tekst);
     decrypt(tekst);
     tekst.macierze->wyswietlMacierze();
 

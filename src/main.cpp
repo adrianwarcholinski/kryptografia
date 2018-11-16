@@ -47,6 +47,7 @@ string wczytajTekst() {
     if(wybor == 1) {
         cout << "Wprowadz tekst:";
         getline(cin, tekst);
+        return tekst;
     }
     else if(wybor == 2) {
         cout << "Nazwa pliku: dane.txt" << endl;

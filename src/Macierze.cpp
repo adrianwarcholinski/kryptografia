@@ -61,7 +61,7 @@ void Macierze::wyswietlMacierze() {
     }
 }
 void Macierze::usunMacierze(){
-    for(int i=0; i<4; i++) {
+    for(int i=0; i<liczbaMacierzyStanu; i++) {
         for(int j=0; j<4; j++) {
             delete[] macierze[i][j];
         }

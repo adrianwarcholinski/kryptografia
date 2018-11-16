@@ -14,7 +14,20 @@ void wyswietlNaglowek() {
          << "Adrian Warcholinski" << endl
          << "Kamil Piatkowski" << endl;
 }
-
+string wczytajZPliku(string nazwa){
+    string tekst="";
+    fstream plik;
+    string linia;
+    plik.open( nazwa, ios::in );
+    if( plik.good() ) {
+        while( !plik.eof() ) {
+            getline(plik, linia);
+            tekst.append(linia+'\n');
+        }
+        plik.close();
+    } else cout << "Blad - nie udalo sie otworzyc pliku" << endl;
+    return tekst;
+}
 string wczytajTekst() {
     short wybor;
     string tekst="";
@@ -34,22 +47,14 @@ string wczytajTekst() {
     if(wybor == 1) {
         cout << "Wprowadz tekst:";
         getline(cin, tekst);
+        return tekst;
     }
     else if(wybor == 2) {
         cout << "Nazwa pliku: dane.txt" << endl;
-        fstream plik;
-        string linia;
-        plik.open( "../dane.txt", ios::in );
-        if( plik.good() ) {
-            while( !plik.eof() ) {
-                getline(plik, linia);
-                tekst.append(linia+'\n');
-            }
-            plik.close();
-        } else cout << "Blad - nie udalo sie otworzyc pliku" << endl;
+        return wczytajZPliku("../dane.txt");
     }
-    return tekst;
 }
+
 string wczytajKlucz() {
     string klucz = "";
     cout << "Wpisz max 16-znakowy klucz:";
@@ -64,8 +69,6 @@ string wczytajKlucz() {
     for (int i = klucz.length(); i < 16; i++) {
         klucz += (char) 0;
     }
-    //cout<<"Klucz: "<<klucz<<endl;
-    //cout<<"KL"<<klucz.length()<<endl;
     return klucz;
 }
 
@@ -99,7 +102,10 @@ int main() {
     wyswietlNaglowek();
     Tekst tekst(wczytajKlucz(),wczytajTekst());
     tekst.macierze->wyswietlMacierze();
+    cout<<"-------------"<<endl;
     encrypt(tekst);
+    tekst.macierze->wyswietlMacierze();
+    cout<<"-------------"<<endl;
     decrypt(tekst);
     tekst.macierze->wyswietlMacierze();
 

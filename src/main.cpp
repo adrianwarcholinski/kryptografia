@@ -126,9 +126,12 @@ int main() {
     cout<<"-------------"<<endl;
     encrypt(tekst);
     zapiszDoPlikow(&tekst);
-//    tekst.macierze->wyswietlMacierze();
+    tekst.kluczRozszerzony=wczytajZPliku("../key.txt");
+    tekst.tresc=wczytajZPliku("../cipher.txt");
+    tekst.macierze=new Macierze(tekst.tresc);
+   //tekst.macierze->wyswietlMacierze();
     decrypt(tekst);
-//    tekst.macierze->wyswietlMacierze();
+    tekst.macierze->wyswietlMacierze();
 
     return 0;
 }

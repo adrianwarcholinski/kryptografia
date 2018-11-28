@@ -14,101 +14,6 @@ void wyswietlNaglowek() {
          << "Adrian Warcholinski" << endl
          << "Kamil Piatkowski" << endl;
 }
-string wczytajZPliku(string nazwa){
-    string tekst="";
-    fstream plik;
-    string linia;
-    plik.open( nazwa, ios::in );
-    if( plik.good() ) {
-        while( !plik.eof() ) {
-            getline(plik, linia);
-            tekst.append(linia+'\n');
-        }
-        plik.close();
-    } else cout << "Blad - nie udalo sie otworzyc pliku" << endl;
-    return tekst;
-}
-void zapiszDoPlikow(Tekst* tekst){
-    fstream plik;
-    plik.open( "../cipher.txt", ios::out );
-    if( plik.good() ) {
-        plik<<tekst->tresc;
-        plik.close();
-    }
-    else cout << "Blad - nie udalo sie otworzyc pliku" << endl;
-
-    fstream plik2;
-    plik2.open( "../key.txt", ios::out );
-    if( plik2.good() ) {
-        plik2 << tekst->kluczRozszerzony;
-        plik2.close();
-    }
-    else cout << "Blad - nie udalo sie otworzyc pliku" << endl;
-}
-string wczytajTekst() {
-    short wybor;
-    string tekst="";
-    cout << "Podaj metode wprowadzania danych:" << endl
-         << "[1] Tekst wprowadzony z klawiatury" << endl
-         << "[2] Tekst wczytywany z pliku" << endl
-         << "Wybierz opcje: ";
-    while(true) {
-        cin >> wybor;
-        cin.ignore();
-        if((wybor == 1) || (wybor == 2)) {
-            break;
-        } else {
-            cout << "Nieprawidlowa opcja. Wybierz opcje: ";
-        }
-    }
-    if(wybor == 1) {
-        cout << "Wprowadz tekst:";
-        getline(cin, tekst);
-        return tekst;
-    }
-    else if(wybor == 2) {
-        cout << "Nazwa pliku: dane.txt" << endl;
-        return wczytajZPliku("../dane.txt");
-    }
-}
-
-string wczytajKlucz() {
-    short wybor;
-    string klucz = "";
-    cout << "Podaj metode wprowadzania danych:" << endl
-         << "[1] Klucz wprowadzony z klawiatury" << endl
-         << "[2] Klucz wczytywany z pliku" << endl
-         << "Wybierz opcje: ";
-    while(true) {
-        cin >> wybor;
-        cin.ignore();
-        if((wybor == 1) || (wybor == 2)) {
-            break;
-        } else {
-            cout << "Nieprawidlowa opcja. Wybierz opcje: ";
-        }
-    }
-    if(wybor == 1) {
-        cout << "Wpisz max 16-znakowy klucz:";
-        while (true) {
-            getline(cin, klucz);
-            if (klucz.length() <= 16) {
-                break;
-            } else {
-                cout << "Niepoprawny klucz - wpisz poprawny max 16-znakowy klucz: ";
-            }
-        }
-        for (int i = klucz.length(); i < 16; i++) {
-            klucz += (char) 0;
-        }
-        return klucz;
-    }
-    else if(wybor == 2) {
-        cout << "Nazwa pliku: key.txt" << endl;
-        return wczytajZPliku("../key.txt");
-    }
-
-}
 
 void encrypt(Tekst &tekstJawny) {
     tekstJawny.addRoundKey(0);
@@ -136,27 +41,64 @@ void decrypt(Tekst &szyfrogram) {
     szyfrogram.addRoundKey(0);
 }
 
-void saveKey(Tekst *tekst) {
-
+void wczytajDane(string &tresc, string &klucz) {
+    short wybor;
+    string tekst="";
+    cout << "Podaj metode wprowadzania danych:" << endl
+         << "[1] Tekst wprowadzony z klawiatury" << endl
+         << "[2] Tekst wczytywany z pliku" << endl
+         << "Wybierz opcje: ";
+    while(true) {
+        cin >> wybor;
+        cin.ignore();
+        if((wybor == 1) || (wybor == 2)) {
+            break;
+        } else {
+            cout << "Nieprawidlowa opcja. Wybierz opcje: ";
+        }
+    }
+    if(wybor == 1) {
+        cout << "Wprowadz tekst:";
+        getline(cin, tekst);
+        tresc = tekst;
+        cout << "Wpisz max 16-znakowy klucz:";
+        while (true) {
+            getline(cin, klucz);
+            if (klucz.length() <= 16) {
+                break;
+            } else {
+                cout << "Niepoprawny klucz - wpisz poprawny max 16-znakowy klucz: ";
+            }
+        }
+        for (int i = klucz.length(); i < 16; i++) {
+            klucz += (char) 0;
+        }
+    }
+    else if(wybor == 2) {
+        fstream plik;
+        plik.open("../dane.txt", ios::in );
+        if( plik.good() ) {
+            getline(plik, tresc);
+            getline(plik, klucz);
+            plik.close();
+        } else cout << "Blad - nie udalo sie otworzyc pliku" << endl;
+    }
 }
+
 
 int main() {
     wyswietlNaglowek();
-    Tekst tekst(wczytajKlucz(),wczytajTekst());
-    tekst.macierze->wyswietlMacierze();
-    cin.get();
+    string tresc;
+    string klucz;
+    wczytajDane(tresc, klucz);
+    Tekst tekst(klucz, tresc);
     cout<<"-------------"<<endl;
+    cout << "Tekst jawny: " << tresc << endl;
+    cout << "Klucz: " << klucz << endl;
     encrypt(tekst);
-    tekst.macierze->wyswietlMacierze();
-    cin.get();
-    zapiszDoPlikow(&tekst);
-    tekst.kluczRozszerzony=wczytajZPliku("../key.txt");
-    tekst.tresc=wczytajZPliku("../cipher.txt");
-    tekst.macierze=new Macierze(tekst.tresc);
-   tekst.macierze->wyswietlMacierze();
-   cin.get();
+    cout << "Kryptogram: " << tekst.tresc << endl;
     decrypt(tekst);
-    tekst.macierze->wyswietlMacierze();
-
+    cout << "Po deszyfrowaniu: " << tekst.tresc << endl;
+    system("PAUSE");
     return 0;
 }

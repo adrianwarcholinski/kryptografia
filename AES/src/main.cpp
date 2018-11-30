@@ -97,8 +97,9 @@ int main() {
     cout << "Klucz: " << klucz << endl;
     encrypt(tekst);
     cout << "Kryptogram: " << tekst.tresc << endl;
+    tekst.macierze->macierze[0][0][0]='1';
     decrypt(tekst);
     cout << "Po deszyfrowaniu: " << tekst.tresc << endl;
-    system("PAUSE");
+    //system("PAUSE");
     return 0;
 }

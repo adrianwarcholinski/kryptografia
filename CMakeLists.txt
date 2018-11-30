@@ -20,7 +20,7 @@ project(Program)
 #ustaw zbior plików zrodlowych projektu
 set(SOURCE_FILES
         src/main.cpp
-        src/BigInt.cpp include/BigInt.h)
+        src/BigInt.cpp include/BigInt.h src/Math.cpp include/Math.h)
 #wlacz wskazane pliki do programu wykonywalnego Program
 add_executable(Program ${SOURCE_FILES})
 

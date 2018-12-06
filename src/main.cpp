@@ -2,6 +2,9 @@
 #include <cstdlib>
 #include <string>
 #include <fstream>
+#include <bitset>
+#include "../include/BigInt.h"
+#include "../include/Math.h"
 using namespace std;
 
 void wyswietlNaglowek() {
@@ -47,7 +50,6 @@ void wczytajDane(string &tresc) {
 int main() {
     wyswietlNaglowek();
     string tekst;
-    wczytajDane(tekst);
-
+    //wczytajDane(tekst);
     return 0;
 }

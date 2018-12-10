@@ -11,6 +11,7 @@ private:
     Math();
 public:
     static BigInt fastPower(BigInt base, BigInt modulo, BigInt exponent);
+    static BigInt fastPower(BigInt base, BigInt exponent);
     static std::bitset<1024> DecToBin(BigInt number);
     static bool isPrime(BigInt n);
     static BigInt BinToDec(std::bitset<1024> number);

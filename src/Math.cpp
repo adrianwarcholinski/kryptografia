@@ -7,14 +7,69 @@
 #include "Math.h"
 
 BigInt Math::fastPower(BigInt base, BigInt modulo, BigInt exponent) {
-    bitset<1024> nBin = Math::DecToBin(exponent);
+//    bitset<1024> nBin = Math::DecToBin(exponent);
+//    BigInt y = 1;
+//    BigInt z = base % modulo;
+//    for(int i=0; i<1024; i++) {
+//        if(nBin[i] == 1) {
+//            y = (y*z) % modulo;
+//        }
+//        z = (z*z) % modulo;
+//    }
+//    return y;
+
     BigInt y = 1;
     BigInt z = base % modulo;
-    for(int i=0; i<1024; i++) {
-        if(nBin[i] == 1) {
+    bool isZero;
+
+    while(exponent > 0) {
+        if(exponent % 2 == 0) {
+            isZero = true;
+        } else {
+            isZero = false;
+        }
+        exponent = exponent / 2;
+        if(isZero == false) {
             y = (y*z) % modulo;
         }
         z = (z*z) % modulo;
+    }
+    return y;
+}
+
+//bitset<1024> Math::DecToBin(BigInt number)
+//{
+//    int bit=0;
+//    bitset<1024> bitset;
+//    while(number>0 && bit<1024){
+//        if(number%2==0){
+//            bitset[bit]=0;
+//        }
+//        else{
+//            bitset[bit]=1;
+//        }
+//        number=number/2;
+//        ++bit;
+//    }
+//    return bitset;
+//}
+
+BigInt Math::fastPower(BigInt base, BigInt exponent) {
+    BigInt y = 1;
+    BigInt z = base;
+    bool isZero;
+
+    while(exponent > 0) {
+        if(exponent % 2 == 0) {
+            isZero = true;
+        } else {
+            isZero = false;
+        }
+        exponent = exponent / 2;
+        if(isZero == false) {
+            y = (y*z);
+        }
+        z = (z*z);
     }
     return y;
 }

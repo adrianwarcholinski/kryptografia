@@ -14,24 +14,14 @@ void wyswietlNaglowek() {
          << "Adrian Warcholinski" << endl
          << "Kamil Piatkowski" << endl;
 }
-string stringToIntString(string tresc){
-    stringstream bufor;
-    for(int i=0; i<tresc.size();i++){
-        bufor<< setfill('0') << setw(3) << int(tresc[i]);
-    }
-    return bufor.str();
+BigInt charToBigInt(char znak){
+    BigInt wynik;
+    wynik=int(znak);
+    return wynik;
 }
 
-string intStringToString(string tresc){
-    string wynik;
-    for(int i=0; i<tresc.size();i+=3){
-        stringstream bufor;
-        for(int k=i;k<i+3;k++) {
-            bufor<<tresc[k];
-        }
-        wynik+=char(stoi(bufor.str(), nullptr,8));
-    }
-    return wynik;
+char BigIntToChar(BigInt znak){
+    return char(stoi(znak.getNumber()));
 }
 
 string wczytajDane() {
@@ -70,8 +60,12 @@ string wczytajDane() {
 
 int main() {
     wyswietlNaglowek();
-    string szyfrowanaLiczbaString=wczytajDane();
-    BigInt szyfrowanaLiczba(szyfrowanaLiczbaString);
+    string szyfrowanyTekst=wczytajDane();
+    BigInt szyfrowaneLiczby[szyfrowanyTekst.size()];
+    for(int i=0;i<szyfrowanyTekst.size();i++){
+        szyfrowaneLiczby[i]=charToBigInt(szyfrowanyTekst[i]);
+    }
+    BigInt szyfrowanaLiczba(szyfrowanyTekst);
     cout << "Wykonuje test pierwszosci..." << endl;
     BigInt p(257);
     bool isPrime = Math::isPrime(p);
@@ -91,19 +85,31 @@ int main() {
         cout << "Wyznaczam C1 i C2..." << endl;
         BigInt c1 = Math::fastPower(g, p, k);
 
-        cout << "Szyfrowana liczba: " << szyfrowanaLiczba << endl;
-        BigInt c2 = (szyfrowanaLiczba * Math::fastPower(b, k)) % p;
+        cout << "Szyfrowany tekst: " << szyfrowanyTekst << endl;
+        BigInt c2[szyfrowanyTekst.size()];
+        for(int i=0;i<szyfrowanyTekst.size();i++){
+            c2[i]= (szyfrowaneLiczby[i] * Math::fastPower(b, k)) % p;
+        }
+
 
         cout << "Kryptogram: " << endl;
         cout << "C1: " << c1 << endl;
-        cout << "C2: " << c2 << endl;
-
+        cout << "C2: ";
+        for(int i=0;i<szyfrowanyTekst.size();i++){
+            cout<<c2[i]<<",";
+        }
+        cout<<endl;
         cout << "Deszyfrowanie... " << endl;
         BigInt exponent = a*(p-2);
-        BigInt d = (c2 * Math::fastPower(c1, exponent)) % p;
-
+        BigInt d[szyfrowanyTekst.size()];
+        for(int i=0;i<szyfrowanyTekst.size();i++) {
+            d[i] = (c2[i] * Math::fastPower(c1, exponent)) % p;
+        }
         cout << "Tekst jawny: " << endl;
-        cout << d << endl;
+        for(int i=0;i<szyfrowanyTekst.size();i++) {
+            cout << BigIntToChar(d[i]);
+        }
+
     } else {
         cout << "Liczba nie przeszla testu pierwszosci Fermata." << endl;
     }

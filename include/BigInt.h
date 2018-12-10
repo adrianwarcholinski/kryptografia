@@ -41,7 +41,6 @@ public:
     const string multiply(const string & num1, const string & num2) const;
     const string divide(const string & num, long long divisor) const;
     const string modulo(string num, long a) const;
-    const BigInt modular_exponentiation(const BigInt & w, const BigInt & n) const;
 
     // operatory matematyczne
     const BigInt operator+(const BigInt & b) const;

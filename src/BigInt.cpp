@@ -232,19 +232,6 @@ const string BigInt::modulo(string num, long a) const {
     return r;
 }
 
-const BigInt BigInt::modular_exponentiation(const BigInt & w, const BigInt & n) const {
-    BigInt res;
-    string num1 = getNumber();
-    string num2 = w.getNumber();
-    string num3 = n.getNumber();
-    cpp_int base(num1);
-    cpp_int pow(num2);
-    cpp_int mod(num3);
-    cpp_int result = powm(base, pow, mod);
-    res.setNumber(result.convert_to<string>());
-    return res;
-}
-
 // operatory matematyczne
 const BigInt BigInt::operator+(const BigInt & b) const {
     BigInt addition;

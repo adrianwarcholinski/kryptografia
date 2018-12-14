@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 #include <bitset>
-#include "../include/BigInt.h"
+#include "DuzyInt.h"
 #include "../include/Math.h"
 using namespace std;
 
@@ -14,14 +14,14 @@ void wyswietlNaglowek() {
          << "Adrian Warcholinski" << endl
          << "Kamil Piatkowski" << endl;
 }
-BigInt charToBigInt(char znak){
-    BigInt wynik;
+DuzyInt charToBigInt(char znak){
+    DuzyInt wynik;
     wynik=int(znak);
     return wynik;
 }
 
-char BigIntToChar(BigInt znak){
-    return char(stoi(znak.getNumber()));
+char BigIntToChar(DuzyInt znak){
+    return char(stoi(znak.getLiczba()));
 }
 
 string wczytajDane() {
@@ -61,21 +61,21 @@ string wczytajDane() {
 int main() {
     wyswietlNaglowek();
     string szyfrowanyTekst=wczytajDane();
-    BigInt szyfrowaneLiczby[szyfrowanyTekst.size()];
+    DuzyInt szyfrowaneLiczby[szyfrowanyTekst.size()];
     for(int i=0;i<szyfrowanyTekst.size();i++){
         szyfrowaneLiczby[i]=charToBigInt(szyfrowanyTekst[i]);
     }
-    BigInt szyfrowanaLiczba(szyfrowanyTekst);
+    DuzyInt szyfrowanaLiczba(szyfrowanyTekst);
     cout << "Wykonuje test pierwszosci..." << endl;
-    BigInt p(257);
+    DuzyInt p(257);
     bool isPrime = Math::isPrime(p);
     if(isPrime) {
         cout << "Liczba p przeszla test pierwszosci Fermata." << endl;
-        BigInt a("70");
-        BigInt g("15");
-        BigInt b = Math::fastPower(g, p, a);
+        DuzyInt a("70");
+        DuzyInt g("15");
+        DuzyInt b = Math::fastPower(g, p, a);
         cout << "b = " << b << endl;
-        BigInt k("127");
+        DuzyInt k("127");
         cout << "a = " << a << endl;
         cout << "g = " << g << endl;
         cout << "b = " << b << endl;
@@ -83,10 +83,10 @@ int main() {
         cout << "p = " << p << endl;
 
         cout << "Wyznaczam C1 i C2..." << endl;
-        BigInt c1 = Math::fastPower(g, p, k);
+        DuzyInt c1 = Math::fastPower(g, p, k);
 
         cout << "Szyfrowany tekst: " << szyfrowanyTekst << endl;
-        BigInt c2[szyfrowanyTekst.size()];
+        DuzyInt c2[szyfrowanyTekst.size()];
         for(int i=0;i<szyfrowanyTekst.size();i++){
             c2[i]= (szyfrowaneLiczby[i] * Math::fastPower(b, k)) % p;
         }
@@ -100,8 +100,8 @@ int main() {
         }
         cout<<endl;
         cout << "Deszyfrowanie... " << endl;
-        BigInt exponent = a*(p-2);
-        BigInt d[szyfrowanyTekst.size()];
+        DuzyInt exponent = a*(p-2);
+        DuzyInt d[szyfrowanyTekst.size()];
         for(int i=0;i<szyfrowanyTekst.size();i++) {
             d[i] = (c2[i] * Math::fastPower(c1, exponent)) % p;
         }

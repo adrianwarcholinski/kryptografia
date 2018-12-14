@@ -6,10 +6,10 @@
 
 #include "Math.h"
 
-BigInt Math::fastPower(BigInt base, BigInt modulo, BigInt exponent) {
+DuzyInt Math::fastPower(DuzyInt base, DuzyInt modulo, DuzyInt exponent) {
 //    bitset<1024> nBin = Math::DecToBin(exponent);
-//    BigInt y = 1;
-//    BigInt z = base % modulo;
+//    DuzyInt y = 1;
+//    DuzyInt z = base % modulo;
 //    for(int i=0; i<1024; i++) {
 //        if(nBin[i] == 1) {
 //            y = (y*z) % modulo;
@@ -18,8 +18,8 @@ BigInt Math::fastPower(BigInt base, BigInt modulo, BigInt exponent) {
 //    }
 //    return y;
 
-    BigInt y = 1;
-    BigInt z = base % modulo;
+    DuzyInt y = 1;
+    DuzyInt z = base % modulo;
     bool isZero;
 
     while(exponent > 0) {
@@ -37,9 +37,9 @@ BigInt Math::fastPower(BigInt base, BigInt modulo, BigInt exponent) {
     return y;
 }
 
-BigInt Math::fastPower(BigInt base, BigInt exponent) {
-    BigInt y = 1;
-    BigInt z = base;
+DuzyInt Math::fastPower(DuzyInt base, DuzyInt exponent) {
+    DuzyInt y = 1;
+    DuzyInt z = base;
     bool isZero;
 
     while(exponent > 0) {
@@ -57,11 +57,11 @@ BigInt Math::fastPower(BigInt base, BigInt exponent) {
     return y;
 }
 
-bool Math::isPrime(BigInt n) { // Test pierwszosci Fermata - badamy, czy x^(n-1) przystaje do 1 (mod n)
+bool Math::isPrime(DuzyInt n) { // Test pierwszosci Fermata - badamy, czy x^(n-1) przystaje do 1 (mod n)
     bool answer = true;
     string temp = "2985108";
-    BigInt leftSide = fastPower(temp,  n , n-1);
-    BigInt rightSide(1);
+    DuzyInt leftSide = fastPower(temp,  n , n-1);
+    DuzyInt rightSide(1);
 
     if(leftSide != rightSide) {
         answer = false;

@@ -3,15 +3,15 @@
 //
 
 #include <iostream>
-#include "BigInt.h"
+#include "DuzyInt.h"
 
 // Konstruktory
-BigInt::BigInt() {
-    number = "0";
-    sign = false;
+DuzyInt::DuzyInt() {
+    liczba = "0";
+    znak = false;
 }
 
-BigInt::BigInt(int n) {
+DuzyInt::DuzyInt(int n) {
     stringstream ss;
     string s;
     ss << n;
@@ -19,49 +19,49 @@ BigInt::BigInt(int n) {
 
     if (isdigit(s[0])) // if not signed
     {
-        setNumber(s);
-        setSign(false); // +ve
+        setLiczba(s);
+        setZnak(false); // +ve
     }
     else {
-        setNumber(s.substr(1));
-        setSign(s[0] == '-');
+        setLiczba(s.substr(1));
+        setZnak(s[0] == '-');
     }
 }
 
-BigInt::BigInt(const string & s) {
+DuzyInt::DuzyInt(const string & s) {
     if (isdigit(s[0])) // if not signed
     {
-        setNumber(s);
-        sign = false; // +ve
+        setLiczba(s);
+        znak = false; // +ve
     }
     else {
-        setNumber(s.substr(1));
-        sign = (s[0] == '-');
+        setLiczba(s.substr(1));
+        znak = (s[0] == '-');
     }
 }
 
 // Operator przypisania
-BigInt & BigInt::operator=(const BigInt & b) {
-    setNumber(b.getNumber());
-    setSign(b.getSign());
+DuzyInt & DuzyInt::operator=(const DuzyInt & b) {
+    setLiczba(b.getLiczba());
+    setZnak(b.getZnak());
     return *this;
 }
 
 // Gettery i settery
-const string & BigInt::getNumber() const { return number; }
+const string & DuzyInt::getLiczba() const { return liczba; }
 
-bool BigInt::getSign() const { return sign; }
+bool DuzyInt::getZnak() const { return znak; }
 
-void BigInt::setNumber(const string & n) { number = n; }
+void DuzyInt::setLiczba(const string &number) { liczba = number; }
 
-void BigInt::setSign(bool s) { sign = s; }
+void DuzyInt::setZnak(bool s) { znak = s; }
 
 // działania
-const BigInt BigInt::absolute() const {
-    return BigInt(getNumber());
+const DuzyInt DuzyInt::absolute() const {
+    return DuzyInt(getLiczba());
 }
 
-const string BigInt::add(const string & num1, const string & num2) const {
+const string DuzyInt::dodaj(const string &num1, const string &num2) const {
     string number1 = num1;
     string number2 = num2;
     string add = (number1.length() > number2.length()) ? number1 : number2;
@@ -93,7 +93,7 @@ const string BigInt::add(const string & num1, const string & num2) const {
     return add;
 }
 
-const string BigInt::subtract(const string & num1, const string & num2) const {
+const string DuzyInt::odejmij(const string &num1, const string &num2) const {
     string number1 = num1;
     string number2 = num2;
 
@@ -120,13 +120,13 @@ const string BigInt::subtract(const string & num1, const string & num2) const {
     return sub;
 }
 
-const string BigInt::multiply(const string & num1, const string & num2) const {
+const string DuzyInt::pomnoz(const string &num1, const string &num2) const {
     int n1 = num1.size();
     int n2 = num2.size();
     if (n1 == 0 || n2 == 0)
         return "0";
 
-    // will keep the result number in vector
+    // will keep the result liczba in vector
     // in reverse order
     vector<int> result(n1 + n2, 0);
 
@@ -146,11 +146,11 @@ const string BigInt::multiply(const string & num1, const string & num2) const {
 
         // Go from right to left in num2
         for (int j = n2 - 1; j >= 0; j--) {
-            // Take current digit of second number
+            // Take current digit of second liczba
             int n2 = num2[j] - '0';
 
-            // Multiply with current digit of first number
-            // and add result to previously stored result
+            // Multiply with current digit of first liczba
+            // and dodaj result to previously stored result
             // at current position.
             int sum = n1 * n2 + result[i_n1 + i_n2] + carry;
 
@@ -191,29 +191,29 @@ const string BigInt::multiply(const string & num1, const string & num2) const {
     return s;
 }
 
-const string BigInt::divide(const string & num, long long divisor) const {
+const string DuzyInt::podziel(const string &num, long long divisor) const {
     // As result can be very large store it in string
     string ans;
 
-    // Find prefix of number that is larger
+    // Find prefix of liczba that is larger
     // than divisor.
     int idx = 0;
-    int temp = number[idx] - '0';
+    int temp = liczba[idx] - '0';
     while (temp < divisor)
-        temp = temp * 10 + (number[++idx] - '0');
+        temp = temp * 10 + (liczba[++idx] - '0');
 
-    // Repeatedly divide divisor with temp. After
+    // Repeatedly podziel divisor with temp. After
     // every division, update temp to include one
     // more digit.
-    while (number.size() > idx) {
+    while (liczba.size() > idx) {
         // Store result in answer i.e. temp / divisor
         ans += (temp / divisor) + '0';
 
-        // Take next digit of number
-        temp = (temp % divisor) * 10 + number[++idx] - '0';
+        // Take next digit of liczba
+        temp = (temp % divisor) * 10 + liczba[++idx] - '0';
     }
 
-    // If divisor is greater than number
+    // If divisor is wieksze than liczba
     if (ans.length() == 0)
         return "0";
 
@@ -221,7 +221,7 @@ const string BigInt::divide(const string & num, long long divisor) const {
     return ans;
 }
 
-const string BigInt::modulo(string num, long a) const {
+const string DuzyInt::modulo(string num, long a) const {
     // Initialize result
     int res = 0;
     string r;
@@ -233,55 +233,55 @@ const string BigInt::modulo(string num, long a) const {
 }
 
 // operatory matematyczne
-const BigInt BigInt::operator+(const BigInt & b) const {
-    BigInt addition;
-    if (getSign() == b.getSign()) // both +ve or -ve
+const DuzyInt DuzyInt::operator+(const DuzyInt & b) const {
+    DuzyInt addition;
+    if (getZnak() == b.getZnak()) // both +ve or -ve
     {
-        addition.setNumber(add(getNumber(), b.getNumber()));
-        addition.setSign(getSign());
+        addition.setLiczba(dodaj(getLiczba(), b.getLiczba()));
+        addition.setZnak(getZnak());
     }
-    else // sign different
+    else // znak different
     {
         if (absolute() > b.absolute()) {
-            addition.setNumber(subtract(getNumber(), b.getNumber()));
-            addition.setSign(getSign());
+            addition.setLiczba(odejmij(getLiczba(), b.getLiczba()));
+            addition.setZnak(getZnak());
         }
         else {
-            addition.setNumber(subtract(b.getNumber(), getNumber()));
-            addition.setSign(b.getSign());
+            addition.setLiczba(odejmij(b.getLiczba(), getLiczba()));
+            addition.setZnak(b.getZnak());
         }
     }
-    if (addition.getNumber() == "0") // avoid (-0) problem
-        addition.setSign(false);
+    if (addition.getLiczba() == "0") // avoid (-0) problem
+        addition.setZnak(false);
 
     return addition;
 }
 
-const BigInt BigInt::operator-(const BigInt & b) const {
-    BigInt temp = b;
-    temp.setSign(!b.getSign()); // x - y = x + (-y)
+const DuzyInt DuzyInt::operator-(const DuzyInt & b) const {
+    DuzyInt temp = b;
+    temp.setZnak(!b.getZnak()); // x - y = x + (-y)
     return (*this) + temp;
 }
 
-const BigInt BigInt::operator*(const BigInt & b) const {
-    BigInt mul;
+const DuzyInt DuzyInt::operator*(const DuzyInt & b) const {
+    DuzyInt mul;
 
-    mul.setNumber(multiply(getNumber(), b.getNumber()));
-    mul.setSign(getSign() != b.getSign());
+    mul.setLiczba(pomnoz(getLiczba(), b.getLiczba()));
+    mul.setZnak(getZnak() != b.getZnak());
 
-    if (mul.getNumber() == "0") // avoid (-0) problem
-        mul.setSign(false);
+    if (mul.getLiczba() == "0") // avoid (-0) problem
+        mul.setZnak(false);
 
     return mul;
 }
 
-const BigInt BigInt::operator/(const BigInt & b) const {
-    BigInt res;
+const DuzyInt DuzyInt::operator/(const DuzyInt & b) const {
+    DuzyInt res;
     string num1, num2;
-    if (getSign() == true) num1 += "-";
-    num1 += getNumber();
-    if (b.getSign() == true) num2 += "-";
-    num2 += b.getNumber();
+    if (getZnak() == true) num1 += "-";
+    num1 += getLiczba();
+    if (b.getZnak() == true) num2 += "-";
+    num2 += b.getLiczba();
     cpp_int n1(num1);
     cpp_int n2(num2);
     n1 = n1 / n2;
@@ -289,13 +289,13 @@ const BigInt BigInt::operator/(const BigInt & b) const {
     return res;
 }
 
-const BigInt BigInt::operator%(const BigInt & b) const {
-    BigInt res;
+const DuzyInt DuzyInt::operator%(const DuzyInt & b) const {
+    DuzyInt res;
     string num1, num2;
-    if (getSign() == true) num1 += "-";
-    num1 += getNumber();
-    if (b.getSign() == true) num2 += "-";
-    num2 += b.getNumber();
+    if (getZnak() == true) num1 += "-";
+    num1 += getLiczba();
+    if (b.getZnak() == true) num2 += "-";
+    num2 += b.getLiczba();
     cpp_int n1(num1);
     cpp_int n2(num2);
     n1 = n1 % n2;
@@ -303,56 +303,56 @@ const BigInt BigInt::operator%(const BigInt & b) const {
     return res;
 }
 
-const BigInt BigInt::operator-() const {
+const DuzyInt DuzyInt::operator-() const {
     return (*this) * -1;
 }
 
-const char BigInt::operator[](int n) const {
-    string number = getNumber();
+const char DuzyInt::operator[](int n) const {
+    string number = getLiczba();
     return number[n];
 }
 
 // operatory logiczne
-bool BigInt::operator==(const BigInt & b) const {
-    return equals((*this), b);
+bool DuzyInt::operator==(const DuzyInt & b) const {
+    return rowne((*this), b);
 }
 
-bool BigInt::operator!=(const BigInt & b) const {
-    return !equals((*this), b);
+bool DuzyInt::operator!=(const DuzyInt & b) const {
+    return !rowne((*this), b);
 }
 
-bool BigInt::operator>(const BigInt & b) const {
-    return greater((*this), b);
+bool DuzyInt::operator>(const DuzyInt & b) const {
+    return wieksze((*this), b);
 }
 
-bool BigInt::operator<(const BigInt & b) const {
-    return less((*this), b);
+bool DuzyInt::operator<(const DuzyInt & b) const {
+    return mniejsze((*this), b);
 }
 
-bool BigInt::operator>=(const BigInt & b) const {
-    return equals((*this), b)
-           || greater((*this), b);
+bool DuzyInt::operator>=(const DuzyInt & b) const {
+    return rowne((*this), b)
+           || wieksze((*this), b);
 }
 
-bool BigInt::operator<=(const BigInt & b) const {
-    return equals((*this), b)
-           || less((*this), b);
+bool DuzyInt::operator<=(const DuzyInt & b) const {
+    return rowne((*this), b)
+           || mniejsze((*this), b);
 
 }
 
-ostream & operator<<(ostream & os, const BigInt & b) {
-    if (b.sign == true) os << '-' << b.number;
-    else os << b.number;
+ostream & operator<<(ostream & os, const DuzyInt & b) {
+    if (b.znak == true) os << '-' << b.liczba;
+    else os << b.liczba;
     return os;
 }
 
-bool BigInt::equals(const BigInt & n1, const BigInt & n2) const {
-    return n1.getNumber() == n2.getNumber() && n1.getSign() == n2.getSign();
+bool DuzyInt::rowne(const DuzyInt &n1, const DuzyInt &n2) const {
+    return n1.getLiczba() == n2.getLiczba() && n1.getZnak() == n2.getZnak();
 }
 
-bool BigInt::less(const BigInt & n1, const BigInt & n2) const {
-    bool sign1 = n1.getSign();
-    bool sign2 = n2.getSign();
+bool DuzyInt::mniejsze(const DuzyInt &n1, const DuzyInt &n2) const {
+    bool sign1 = n1.getZnak();
+    bool sign2 = n2.getZnak();
 
     if (sign1 && !sign2) // if n1 is -ve and n2 is +ve
         return true;
@@ -362,24 +362,24 @@ bool BigInt::less(const BigInt & n1, const BigInt & n2) const {
 
     else if (!sign1) // both +ve
     {
-        if (n1.getNumber().length() < n2.getNumber().length())
+        if (n1.getLiczba().length() < n2.getLiczba().length())
             return true;
-        if (n1.getNumber().length() > n2.getNumber().length())
+        if (n1.getLiczba().length() > n2.getLiczba().length())
             return false;
-        return n1.getNumber() < n2.getNumber();
+        return n1.getLiczba() < n2.getLiczba();
     }
     else // both -ve
     {
-        if (n1.getNumber().length() > n2.getNumber().length())
+        if (n1.getLiczba().length() > n2.getLiczba().length())
             return true;
-        if (n1.getNumber().length() < n2.getNumber().length())
+        if (n1.getLiczba().length() < n2.getLiczba().length())
             return false;
-        return n1.getNumber().compare(n2.getNumber()) > 0; // greater with -ve sign is LESS
+        return n1.getLiczba().compare(n2.getLiczba()) > 0; // wieksze with -ve znak is LESS
     }
 }
 
-bool BigInt::greater(const BigInt & n1, const BigInt & n2) const {
-    return !equals(n1, n2) && !less(n1, n2);
+bool DuzyInt::wieksze(const DuzyInt &n1, const DuzyInt &n2) const {
+    return !rowne(n1, n2) && !mniejsze(n1, n2);
 }
 
 

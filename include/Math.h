@@ -1,16 +1,16 @@
 #ifndef PROGRAM_MATH_H
 #define PROGRAM_MATH_H
 
-#include "BigInt.h"
+#include "DuzyInt.h"
 #include <bitset>
 
-class BigInt;
+class DuzyInt;
 
 class Math {
 public:
-    static BigInt fastPower(BigInt base, BigInt modulo, BigInt exponent);
-    static BigInt fastPower(BigInt base, BigInt exponent);
-    static bool isPrime(BigInt n);
+    static DuzyInt fastPower(DuzyInt base, DuzyInt modulo, DuzyInt exponent);
+    static DuzyInt fastPower(DuzyInt base, DuzyInt exponent);
+    static bool isPrime(DuzyInt n);
 };
 
 

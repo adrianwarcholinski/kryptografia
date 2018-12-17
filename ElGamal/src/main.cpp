@@ -3,7 +3,7 @@
 #include <string>
 #include <fstream>
 #include <bitset>
-#include "../include/BigInt.h"
+#include "DuzyInt.h"
 #include "../include/Math.h"
 using namespace std;
 
@@ -14,24 +14,14 @@ void wyswietlNaglowek() {
          << "Adrian Warcholinski" << endl
          << "Kamil Piatkowski" << endl;
 }
-string stringToIntString(string tresc){
-    stringstream bufor;
-    for(int i=0; i<tresc.size();i++){
-        bufor<< setfill('0') << setw(3) << int(tresc[i]);
-    }
-    return bufor.str();
+DuzyInt charToBigInt(char znak){
+    DuzyInt wynik;
+    wynik=int(znak);
+    return wynik;
 }
 
-string intStringToString(string tresc){
-    string wynik;
-    for(int i=0; i<tresc.size();i+=3){
-        stringstream bufor;
-        for(int k=i;k<i+3;k++) {
-            bufor<<tresc[k];
-        }
-        wynik+=char(stoi(bufor.str(), nullptr,8));
-    }
-    return wynik;
+char BigIntToChar(DuzyInt znak){
+    return char(stoi(znak.getLiczba()));
 }
 
 string wczytajDane() {
@@ -70,40 +60,70 @@ string wczytajDane() {
 
 int main() {
     wyswietlNaglowek();
-    string szyfrowanaLiczbaString=wczytajDane();
-    BigInt szyfrowanaLiczba(szyfrowanaLiczbaString);
+<<<<<<< HEAD:ElGamal/src/main.cpp
+    string szyfrowanyTekst = wczytajDane();
+=======
+    string szyfrowanyTekst=wczytajDane();
+    DuzyInt szyfrowaneLiczby[szyfrowanyTekst.size()];
+    for(int i=0;i<szyfrowanyTekst.size();i++){
+        szyfrowaneLiczby[i]=charToBigInt(szyfrowanyTekst[i]);
+    }
+    DuzyInt szyfrowanaLiczba(szyfrowanyTekst);
+>>>>>>> master:src/main.cpp
     cout << "Wykonuje test pierwszosci..." << endl;
-    BigInt p(257);
+    DuzyInt p(257);
     bool isPrime = Math::isPrime(p);
     if(isPrime) {
         cout << "Liczba p przeszla test pierwszosci Fermata." << endl;
-        BigInt a("70");
-        BigInt g("15");
-        BigInt b = Math::fastPower(g, p, a);
+        DuzyInt a("70");
+        DuzyInt g("15");
+        DuzyInt b = Math::fastPower(g, p, a);
         cout << "b = " << b << endl;
-        BigInt k("127");
+        DuzyInt k("127");
         cout << "a = " << a << endl;
         cout << "g = " << g << endl;
         cout << "b = " << b << endl;
         cout << "k = " << k << endl;
         cout << "p = " << p << endl;
 
-        cout << "Wyznaczam C1 i C2..." << endl;
-        BigInt c1 = Math::fastPower(g, p, k);
+<<<<<<< HEAD:ElGamal/src/main.cpp
+        for(unsigned char szyfrowanaLiczba : szyfrowanyTekst) {
+            cout << szyfrowanaLiczba << ":" << endl;
 
-        cout << "Szyfrowana liczba: " << szyfrowanaLiczba << endl;
-        BigInt c2 = (szyfrowanaLiczba * Math::fastPower(b, k)) % p;
+        }
+
+
+
+=======
+        cout << "Wyznaczam C1 i C2..." << endl;
+        DuzyInt c1 = Math::fastPower(g, p, k);
+
+        cout << "Szyfrowany tekst: " << szyfrowanyTekst << endl;
+        DuzyInt c2[szyfrowanyTekst.size()];
+        for(int i=0;i<szyfrowanyTekst.size();i++){
+            c2[i]= (szyfrowaneLiczby[i] * Math::fastPower(b, k)) % p;
+        }
+
 
         cout << "Kryptogram: " << endl;
         cout << "C1: " << c1 << endl;
-        cout << "C2: " << c2 << endl;
-
+        cout << "C2: ";
+        for(int i=0;i<szyfrowanyTekst.size();i++){
+            cout<<c2[i]<<",";
+        }
+        cout<<endl;
+>>>>>>> master:src/main.cpp
         cout << "Deszyfrowanie... " << endl;
-        BigInt exponent = a*(p-2);
-        BigInt d = (c2 * Math::fastPower(c1, exponent)) % p;
-
+        DuzyInt exponent = a*(p-2);
+        DuzyInt d[szyfrowanyTekst.size()];
+        for(int i=0;i<szyfrowanyTekst.size();i++) {
+            d[i] = (c2[i] * Math::fastPower(c1, exponent)) % p;
+        }
         cout << "Tekst jawny: " << endl;
-        cout << d << endl;
+        for(int i=0;i<szyfrowanyTekst.size();i++) {
+            cout << BigIntToChar(d[i]);
+        }
+
     } else {
         cout << "Liczba nie przeszla testu pierwszosci Fermata." << endl;
     }

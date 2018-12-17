@@ -35,7 +35,7 @@ public:
     void setZnak(bool sign);
 
     // działania
-    const DuzyInt absolute() const;
+    const DuzyInt wartosc_bezwzgledna() const;
     const string dodaj(const string &num1, const string &num2) const;
     const string odejmij(const string &num1, const string &num2) const;
     const string pomnoz(const string &num1, const string &num2) const;

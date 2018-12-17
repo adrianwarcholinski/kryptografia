@@ -59,7 +59,7 @@ DuzyInt Math::fastPower(DuzyInt base, DuzyInt exponent) {
 
 bool Math::isPrime(DuzyInt n) { // Test pierwszosci Fermata - badamy, czy x^(n-1) przystaje do 1 (mod n)
     bool answer = true;
-    string temp = "2985108";
+    string temp = "201";
     DuzyInt leftSide = fastPower(temp,  n , n-1);
     DuzyInt rightSide(1);
 
@@ -67,7 +67,7 @@ bool Math::isPrime(DuzyInt n) { // Test pierwszosci Fermata - badamy, czy x^(n-1
         answer = false;
     }
 
-    temp = "1981981981";
+    temp = "147";
     leftSide = fastPower(temp,  n , n-1);
     rightSide = 1;
 
@@ -75,7 +75,7 @@ bool Math::isPrime(DuzyInt n) { // Test pierwszosci Fermata - badamy, czy x^(n-1
         answer = false;
     }
 
-    temp = "91005151848";
+    temp = "3";
     leftSide = fastPower(temp,  n , n-1);
     rightSide = 1;
 

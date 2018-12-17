@@ -57,7 +57,7 @@ void DuzyInt::setLiczba(const string &number) { liczba = number; }
 void DuzyInt::setZnak(bool s) { znak = s; }
 
 // działania
-const DuzyInt DuzyInt::absolute() const {
+const DuzyInt DuzyInt::wartosc_bezwzgledna() const {
     return DuzyInt(getLiczba());
 }
 
@@ -242,7 +242,7 @@ const DuzyInt DuzyInt::operator+(const DuzyInt & b) const {
     }
     else // znak different
     {
-        if (absolute() > b.absolute()) {
+        if (wartosc_bezwzgledna() > b.wartosc_bezwzgledna()) {
             addition.setLiczba(odejmij(getLiczba(), b.getLiczba()));
             addition.setZnak(getZnak());
         }

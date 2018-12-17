@@ -67,28 +67,26 @@ int main() {
     }
     DuzyInt szyfrowanaLiczba(szyfrowanyTekst);
     cout << "Wykonuje test pierwszosci..." << endl;
-    DuzyInt p(257);
+    DuzyInt p("32553564085451391275856713123390311890318450590292519057317422150292415523109201659612228535643301240109780758567295324228515924941497212721749572274659477550597202013381665366413595298117580519523680536179884679717727570822180352036496257141711892987237470619766362793748626538831203668035059415389014240677");
     bool isPrime = Math::isPrime(p);
     if(isPrime) {
         cout << "Liczba p przeszla test pierwszosci Fermata." << endl;
-        DuzyInt a("70");
-        DuzyInt g("15");
-        DuzyInt b = Math::fastPower(g, p, a);
-        cout << "b = " << b << endl;
-        DuzyInt k("127");
+        DuzyInt a = p - 12465;
+        DuzyInt g = p - 134649796;
+        DuzyInt h = Math::fastPower(g, p, a);
+        DuzyInt r = p - 1214644;
         cout << "a = " << a << endl;
         cout << "g = " << g << endl;
-        cout << "b = " << b << endl;
-        cout << "k = " << k << endl;
+        cout << "h = " << h << endl;
+        cout << "r = " << r << endl;
         cout << "p = " << p << endl;
-
         cout << "Wyznaczam C1 i C2..." << endl;
-        DuzyInt c1 = Math::fastPower(g, p, k);
+        DuzyInt c1 = Math::fastPower(g, p, r);
 
         cout << "Szyfrowany tekst: " << szyfrowanyTekst << endl;
         DuzyInt c2[szyfrowanyTekst.size()];
         for(int i=0;i<szyfrowanyTekst.size();i++){
-            c2[i]= (szyfrowaneLiczby[i] * Math::fastPower(b, k)) % p;
+            c2[i]= (szyfrowaneLiczby[i] * Math::fastPower(h, r)) % p;
         }
 
 

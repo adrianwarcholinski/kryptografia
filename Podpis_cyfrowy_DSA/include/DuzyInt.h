@@ -16,7 +16,7 @@ using namespace boost::multiprecision;
 using namespace std;
 
 class DuzyInt {
-private:
+public:
     string liczba;
     bool znak;
 public:

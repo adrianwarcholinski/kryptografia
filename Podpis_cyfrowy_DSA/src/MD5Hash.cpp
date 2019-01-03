@@ -1,6 +1,7 @@
+#include <string.h>
 #include <string>
 #include <cmath>
-
+#include <stdlib.h>
 using namespace std;
 
 typedef union uwb {

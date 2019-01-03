@@ -1,14 +1,55 @@
 #include <string>
 #include <iostream>
-
+#include <fstream>
 #include "../include/DuzyInt.h"
 #include "../include/Math.h"
 #include "MD5Hash.cpp"
-
+#include <exception>
 using namespace std;
-
+void wyswietlNaglowek() {
+    cout << "Podpis cyforwy DSA." << endl
+         << "Autorzy:" << endl
+         << "Aleksandra Ruta" << endl
+         << "Adrian Warcholinski" << endl
+         << "Kamil Piatkowski" << endl;
+}
+string wczytajDane() {
+    short wybor;
+    string tresc;
+    string tekst;
+    cout << "Podaj metode wprowadzania danych:" << endl
+         << "[1] Tekst wprowadzony z klawiatury" << endl
+         << "[2] Tekst wczytywany z pliku" << endl
+         << "Wybierz opcje: ";
+    while(true) {
+        cin >> wybor;
+        cin.ignore();
+        if((wybor == 1) || (wybor == 2)) {
+            break;
+        } else {
+            cout << "Nieprawidlowa opcja. Wybierz opcje: ";
+        }
+    }
+    if(wybor == 1) {
+        cout << "Wprowadz tekst:";
+        getline(cin, tekst);
+        tresc = tekst;
+    }
+    else if(wybor == 2) {
+        fstream plik;
+        plik.open("../dane.txt", ios::in );
+        if( plik.good() ) {
+            getline(plik, tresc);
+            plik.close();
+        } else {
+            throw "Blad - nie udalo sie otworzyc pliku dane.txt";
+        }
+    }
+    return tresc;
+}
 int main() {
-    string szyfrowanyTekst = "ALA MA KOTA";
+    wyswietlNaglowek();
+    string szyfrowanyTekst = wczytajDane();
 
     // CZYNNOŚCI WSTĘPNE
     DuzyInt p("17801190547854226652823756245015999014523215636912067427327445031"
@@ -94,7 +135,5 @@ int main() {
     } else {
         cout << "Liczba p nie jest pierwsza" << endl;
     }
-
-    system("PAUSE");
     return 0;
 }
